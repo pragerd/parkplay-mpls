@@ -23,6 +23,21 @@ node scripts/sync.mjs   # refresh the catalog (needs network access to ActiveNet
 Opening `index.html` straight off disk will not work: browsers block a local
 page from fetching a local JSON file, and the page says so if you try.
 
+## What you can do with it
+
+- Filter by age, category, weekday, distance, open spots, free, starting soon
+- **Save anything with one tap.** Every program row has a heart. It works with
+  no kid added and no account: the program lands in My plan straight away, and
+  you can put a name to it later from a dropdown on the saved row. The count in
+  the nav shows how many you are holding.
+- Rank all locations by distance, then pick the three preferred rec centers the
+  real registration form asks for
+- A six-question quiz scored against what is actually open at your kid's age
+- My plan: a week grid with overlap warnings across kids, calendar export, a
+  copy-as-text summary, and every registration link in one place
+- Everything lives in `localStorage`, so there is nothing to sign into and
+  nothing leaves the browser
+
 ## Where the data comes from
 
 MPRB runs youth registration through ActiveNet, branded "MPRB Online

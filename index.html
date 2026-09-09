@@ -187,6 +187,12 @@ p{margin:0}
 .nav button[aria-current="page"]{
   background:var(--sunny);border-color:var(--rule);color:var(--ink);box-shadow:var(--pop-sm);
 }
+.nav .count{
+  display:inline-grid;place-items:center;min-width:21px;height:21px;margin-left:6px;padding:0 5px;
+  border:2px solid var(--rule);border-radius:999px;background:var(--poppy);color:#FFF8EE;
+  font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;vertical-align:1px;
+}
+.nav .count:empty{display:none}
 :root[data-theme="dark"] .nav button[aria-current="page"]{color:#151318}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .nav button[aria-current="page"]{color:#151318}}
 
@@ -321,9 +327,13 @@ main.wrap{padding-top:var(--s6);padding-bottom:var(--s8)}
    ===================================================================== */
 .list{border:2px solid var(--rule);border-radius:var(--sq);background:var(--card);box-shadow:var(--pop);overflow:hidden}
 .item{
-  display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:var(--s3);align-items:center;
-  width:100%;padding:var(--s3);background:transparent;text-align:left;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s2);align-items:center;
+  width:100%;padding:var(--s2) var(--s3);background:transparent;text-align:left;
   border:0;border-bottom:2px dashed var(--hair);
+}
+.item-main{
+  display:grid;grid-template-columns:44px minmax(0,1fr);gap:var(--s3);align-items:center;
+  width:100%;padding:var(--s1) 0;background:transparent;border:0;text-align:left;font:inherit;color:inherit;
 }
 .item:last-child{border-bottom:0}
 .item:hover{background:var(--paper-2)}
@@ -331,8 +341,26 @@ main.wrap{padding-top:var(--s6);padding-bottom:var(--s8)}
 .item-meta{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s0);font-size:var(--f-xs);color:var(--ink-2);font-weight:500;font-variant-numeric:tabular-nums}
 .item-meta span{white-space:nowrap;display:inline-flex;align-items:center}
 .item-meta span:not(:last-child)::after{content:"·";margin-left:var(--s2);color:var(--ink-3);font-weight:700}
-.item-right{display:flex;flex-direction:column;align-items:flex-end;gap:var(--s0)}
-.item-right.acts{flex-direction:row;align-items:center;gap:var(--s1)}
+.item-right{display:flex;align-items:center;gap:var(--s2)}
+.item-facts{display:flex;flex-direction:column;align-items:flex-end;gap:var(--s0)}
+.item-right.acts{gap:var(--s1);flex-wrap:wrap;justify-content:flex-end}
+
+/* The save button. One tap from any row, no dialog, no account. */
+.save{
+  width:38px;height:38px;flex:none;display:grid;place-items:center;
+  border:2px solid var(--rule);border-radius:12px 9px 13px 10px;
+  background:var(--card);color:var(--ink);box-shadow:var(--pop-sm);
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.save svg{width:22px;height:22px}
+.save:hover{transform:translate(-1px,-1px);box-shadow:var(--pop);background:var(--paper-2)}
+.save[aria-pressed="true"]{background:var(--poppy);color:#FFF8EE}
+.save[aria-pressed="true"]:hover{background:var(--poppy)}
+.save-wide{width:auto;height:auto;padding:11px 18px;gap:var(--s1);grid-auto-flow:column;font-size:var(--f-sm);font-weight:800;border-radius:var(--sq-sm);box-shadow:var(--pop)}
+.assign{
+  width:auto;border:2px solid var(--rule);border-radius:999px;background:var(--paper-2);
+  padding:3px 9px;font-size:var(--f-xs);font-weight:700;
+}
 .dist{font-size:var(--f-sm);font-weight:800;font-variant-numeric:tabular-nums}
 .empty{padding:var(--s6) var(--s4);text-align:center;color:var(--ink-2);font-size:var(--f-sm)}
 .empty .hand{display:block;color:var(--tangerine);margin-bottom:var(--s1);font-size:22px}
@@ -471,8 +499,9 @@ footer.site .hand{color:var(--tangerine);font-size:20px;display:block;margin-bot
 @media (max-width:620px){
   .wrap{padding:0 var(--s3)}
   .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .item{grid-template-columns:40px minmax(0,1fr);row-gap:var(--s1)}
-  .item-right{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}
+  .item{grid-template-columns:minmax(0,1fr);row-gap:var(--s1)}
+  .item-main{grid-template-columns:40px minmax(0,1fr)}
+  .item-right{justify-content:space-between}
   .near{grid-template-columns:24px minmax(0,1fr);row-gap:6px}
   .week{grid-template-columns:1fr}
   .brand-sub{display:none}
@@ -520,7 +549,7 @@ footer.site .hand{color:var(--tangerine);font-size:20px;display:block;margin-bot
       <button type="button" data-nav="find">Find a program</button>
       <button type="button" data-nav="map">Parks map</button>
       <button type="button" data-nav="quiz">Match quiz</button>
-      <button type="button" data-nav="plan">My plan</button>
+      <button type="button" data-nav="plan">My plan<span class="count" id="plan-count"></span></button>
     </nav>
     <div id="acct"></div>
   </div>
@@ -589,7 +618,8 @@ var D = {
   camps:'<path d="M16 7l9.5 18h-19z"/><path d="M16 25V13"/><circle cx="25" cy="8" r="2.5"/>',
   teen:'<path d="M7 20v-4a9 9 0 0118 0v4"/><path d="M5.5 20h4v6h-4zM22.5 20h4v6h-4z"/>',
   events:'<ellipse cx="14" cy="12.5" rx="7" ry="8"/><path d="M14 20.5c2 3.5-2 4.5 0 8"/><path d="M24 9l2-2M25 16l2.5.5M22 5l.5-2.5"/>',
-  other:'<path d="M16 6l3.2 7.2 7.8 1-5.6 5.4 1.4 7.6-6.8-3.6-6.8 3.6 1.4-7.6L5 14.2l7.8-1z"/>'
+  other:'<path d="M16 6l3.2 7.2 7.8 1-5.6 5.4 1.4 7.6-6.8-3.6-6.8 3.6 1.4-7.6L5 14.2l7.8-1z"/>',
+  heart:'<path d="M16 26.5c-1.6-1.2-9.8-6.4-9.8-13 0-3.4 2.6-5.6 5.4-5.6 2 0 3.6 1.1 4.4 2.7.8-1.6 2.4-2.7 4.4-2.7 2.8 0 5.4 2.2 5.4 5.6 0 6.6-8.2 11.8-9.8 13z"/>'
 };
 function icon(key, filter){
   var body = D[key] || D.other;
@@ -659,7 +689,9 @@ try {
   var saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
   if (saved){
     state.kids = saved.kids || [];
-    state.plan = saved.plan || [];
+    state.plan = (saved.plan || []).map(function(e, i){
+      return e.sid ? e : Object.assign({sid:"s0" + i}, e);
+    });
     state.preferred = saved.preferred || [];
     state.home = saved.home || null;
   }
@@ -770,10 +802,45 @@ function kidById(id){
   for (var i = 0; i < state.kids.length; i++) if (state.kids[i].id === id) return state.kids[i];
   return null;
 }
-function inPlan(programId, kidId){
-  return state.plan.some(function(e){ return String(e.programId) === String(programId) && (!kidId || e.kidId === kidId); });
+function inPlan(programId){
+  return state.plan.some(function(e){ return String(e.programId) === String(programId); });
+}
+/* A saved program does not need a kid attached. Save first, sort it out later. */
+function toggleSave(programId, kidId){
+  var already = inPlan(programId);
+  if (already){
+    state.plan = state.plan.filter(function(e){ return String(e.programId) !== String(programId); });
+    save();
+    return false;
+  }
+  var assign = kidId || (state.kids.length === 1 ? state.kids[0].id : null);
+  state.plan.push({sid:"s" + Date.now() + Math.round(Math.random() * 1e4), kidId:assign, programId:programId});
+  save();
+  return true;
+}
+function saveButton(p, wide){
+  var on = inPlan(p.id);
+  return '<button class="save wiggle' + (wide ? " save-wide" : "") + '" type="button" data-act="toggle-save" data-id="' + p.id + '"' +
+    ' aria-pressed="' + on + '" title="' + (on ? "Remove from my plan" : "Save to my plan") + '"' +
+    ' aria-label="' + (on ? "Remove " + esc(p.name) + " from my plan" : "Save " + esc(p.name) + " to my plan") + '">' +
+    '<svg class="doodle" viewBox="0 0 32 32" aria-hidden="true" focusable="false" filter="url(#rough)">' +
+      (on ? D.heart.replace("<path", '<path class="solid"') : D.heart) + '</svg>' +
+    (wide ? '<span>' + (on ? "Saved" : "Save to my plan") + '</span>' : "") + '</button>';
+}
+function renderPlanCount(){
+  var el = $("#plan-count");
+  if (el) el.textContent = state.plan.length ? String(state.plan.length) : "";
 }
 function shortName(name){ return String(name || "").replace(/\s+(Park|Recreation Center|Community Center|Field Park|Regional Park)$/i, ""); }
+/* Trim to a whole word, so a week-grid label never breaks mid-word. */
+function shortLabel(name, max){
+  var text = String(name || "").trim();
+  var cap = max || 24;
+  if (text.length <= cap) return text;
+  var cut = text.slice(0, cap);
+  var space = cut.lastIndexOf(" ");
+  return (space > 10 ? cut.slice(0, space) : cut) + "\u2026";
+}
 function wavyDivider(){
   return '<svg class="divider" viewBox="0 0 1200 18" preserveAspectRatio="none" aria-hidden="true" filter="url(#rough)">' +
     '<path d="M0 11c60-9 120 9 180 0s120-9 180 0 120 9 180 0 120-9 180 0 120 9 180 0 120-9 180 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>';
@@ -1040,7 +1107,8 @@ function row(p){
     meta.push('<span>' + esc(p.dateRange.length > 58 ? p.dateRange.slice(0, 55).replace(/[\s,.]+$/, "") + "…" : p.dateRange) + '</span>');
   }
   if (!meta.length) meta.push('<span>schedule on the MPRB listing</span>');
-  return '<button class="item" type="button" data-act="open-program" data-id="' + p.id + '">' +
+  return '<div class="item">' +
+    '<button class="item-main" type="button" data-act="open-program" data-id="' + p.id + '">' +
     stamp(p.category) +
     '<span>' +
       '<span class="item-title">' + esc(p.name) +
@@ -1049,9 +1117,14 @@ function row(p){
         (start != null && start >= 0 && start <= 14 ? ' <span class="tag tag-tight">starts in ' + start + 'd</span>' : "") +
       '</span>' +
       '<span class="item-meta">' + meta.join("") + '</span>' +
+    '</span></button>' +
+    '<span class="item-right">' +
+      '<span class="item-facts">' +
+        (p.citywide ? '<span class="dist">citywide</span>' : (d != null ? '<span class="dist">' + fmtDist(d) + '</span>' : "")) +
+        spotsTag(p) + '</span>' +
+      saveButton(p) +
     '</span>' +
-    '<span class="item-right"><span class="dist">' + (p.citywide ? "citywide" : fmtDist(d)) + '</span>' + spotsTag(p) + '</span>' +
-  '</button>';
+  '</div>';
 }
 
 function programModal(p){
@@ -1086,14 +1159,15 @@ function programModal(p){
         '<dt>Fee</dt><dd>' + (isFree(p) ? "Free" : esc(p.feeLabel || "On the MPRB page")) +
           '. Youth fees are fully discountable at checkout for Minneapolis residents.</dd>' +
       '</dl>' +
-      (state.kids.length
-        ? '<div class="field"><label for="kidsel">Save to my plan for</label><select id="kidsel">' + kidOptions + '</select></div>'
-        : '<p class="fine">Add a kid to save this to your plan.</p>') +
+      (state.kids.length && !inPlan(p.id)
+        ? '<div class="field"><label for="kidsel">Whose is this?</label><select id="kidsel">' +
+          '<option value="">Not sure yet</option>' + kidOptions + '</select></div>'
+        : "") +
     '</div>' +
     '<div class="modal-foot">' +
       (p.enrollUrl ? '<a class="btn btn-go" href="' + esc(p.enrollUrl) + '" target="_blank" rel="noopener">Register at MPRB</a>' : "") +
       (p.detailUrl ? '<a class="btn btn-sm" href="' + esc(p.detailUrl) + '" target="_blank" rel="noopener">Full listing</a>' : "") +
-      (state.kids.length ? '<button class="btn btn-yes btn-sm" type="button" data-act="add-to-plan" data-id="' + p.id + '">Save to my plan</button>' : "") +
+      saveButton(p, true) +
       '<button class="btn btn-quiet btn-sm" type="button" data-act="close-modal">Close</button>' +
     '</div>'
   );
@@ -1486,8 +1560,9 @@ function renderQuizResult(el){
    Plan
    ===================================================================== */
 function planEntries(){
-  return state.plan.map(function(e){ return {kid:kidById(e.kidId), program:programById(e.programId)}; })
-    .filter(function(e){ return e.kid && e.program; });
+  return state.plan.map(function(e){
+    return {sid:e.sid, kid:e.kidId ? kidById(e.kidId) : null, program:programById(e.programId)};
+  }).filter(function(e){ return e.program; });
 }
 function renderPlan(){
   var entries = planEntries();
@@ -1496,11 +1571,16 @@ function renderPlan(){
     el.innerHTML =
       '<div class="section-head"><h2>My plan</h2></div>' +
       '<div class="card card-pad" style="text-align:center;padding:var(--s7) var(--s4)">' +
-        '<span class="hand" style="color:var(--tangerine);font-size:22px">nothing pinned yet</span>' +
-        '<p style="color:var(--ink-2);margin:var(--s2) 0 var(--s4)">Save a program and this turns into a week view of who&rsquo;s where, with every registration link in one place.</p>' +
-        '<button class="btn btn-go" type="button" data-nav="find">Browse programs</button></div>';
+        '<span class="hand" style="color:var(--tangerine);font-size:22px">nothing saved yet</span>' +
+        '<p style="color:var(--ink-2);margin:var(--s2) 0 var(--s3)">Tap the heart on any program and it lands here, whether or not you have added a kid yet. This page then becomes a week view of who&rsquo;s where, with every registration link in one place.</p>' +
+        '<div class="row" style="justify-content:center">' +
+          '<span class="save" aria-hidden="true"><svg class="doodle" viewBox="0 0 32 32" filter="url(#rough)">' + D.heart + '</svg></span>' +
+          '<span class="hand" style="color:var(--ink-3)">&larr; this one</span>' +
+        '</div>' +
+        '<button class="btn btn-go" type="button" data-nav="find" style="margin-top:var(--s4)">Browse programs</button></div>';
     return;
   }
+  var unassignedCount = entries.filter(function(e){ return !e.kid; }).length;
   var byDay = {}, undated = [];
   DAY_ORDER.forEach(function(d){ byDay[d] = []; });
   entries.forEach(function(e){
@@ -1523,30 +1603,39 @@ function renderPlan(){
     return '<div class="day"><span class="label">' + d + '</span>' +
       (byDay[d].length ? byDay[d].map(function(x){
         return '<div class="sess" style="border-left-color:' + (x.clash ? "var(--poppy)" : lineColor(x.program.category)) + '">' +
-          '<b>' + esc(x.kid.name) + '</b><i>' + esc(x.program.time || "time TBD") + '</i>' +
+          '<b>' + esc(x.kid ? x.kid.name : shortLabel(x.program.name)) + '</b><i>' + esc(x.program.time || "time TBD") + '</i>' +
           '<i>' + esc(shortName(x.program.parkLabel) || "citywide") + '</i></div>';
       }).join("") : '<span class="fine">free</span>') + '</div>';
   }).join("");
   var rows = entries.map(function(e){
     var p = e.program;
-    return '<div class="item">' + stamp(p.category) +
-      '<span><span class="item-title">' + esc(p.name) + ' <span class="tag">' + esc(e.kid.name) + '</span></span>' +
-      '<span class="item-meta"><span>' + esc(p.parkLabel || "citywide") + '</span><span>' + esc([p.days, p.time].filter(Boolean).join(" · ")) + '</span></span></span>' +
-      '<span class="item-right acts">' +
+    var who = state.kids.length
+      ? '<select class="assign" data-act="assign" data-sid="' + e.sid + '" aria-label="Who is this for?">' +
+          '<option value=""' + (e.kid ? "" : " selected") + '>who?</option>' +
+          state.kids.map(function(k){
+            return '<option value="' + k.id + '"' + (e.kid && e.kid.id === k.id ? " selected" : "") + '>' + esc(k.name) + '</option>';
+          }).join("") + '</select>'
+      : '<button class="btn btn-sm" type="button" data-act="add-kid">Add a kid</button>';
+    return '<div class="item">' +
+      '<button class="item-main" type="button" data-act="open-program" data-id="' + p.id + '">' + stamp(p.category) +
+      '<span><span class="item-title">' + esc(p.name) + '</span>' +
+      '<span class="item-meta"><span>' + esc(p.parkLabel || "citywide") + '</span><span>' + esc([p.days, p.time].filter(Boolean).join(" · ") || "schedule on the listing") + '</span></span></span></button>' +
+      '<span class="item-right acts">' + who +
         (p.enrollUrl ? '<a class="btn btn-go btn-sm" href="' + esc(p.enrollUrl) + '" target="_blank" rel="noopener">Register</a>' : "") +
-        '<button class="btn btn-quiet btn-sm" type="button" data-act="remove-plan" data-id="' + p.id + '" data-kid="' + e.kid.id + '">Remove</button>' +
+        '<button class="btn btn-quiet btn-sm" type="button" data-act="remove-plan" data-sid="' + e.sid + '">Remove</button>' +
       '</span></div>';
   }).join("");
   var fees = entries.map(function(e){
-    return '<div class="money"><span>' + esc(e.kid.name) + ' &middot; ' + esc(e.program.name) + '</span>' +
+    return '<div class="money"><span>' + (e.kid ? esc(e.kid.name) + ' &middot; ' : "") + esc(e.program.name) + '</span>' +
       '<span class="num">' + esc(isFree(e.program) ? "free" : (e.program.feeLabel || "see listing")) + '</span></div>';
   }).join("");
 
   el.innerHTML =
     '<div class="section-head">' +
       '<div><h2>My plan</h2><p style="color:var(--ink-2);font-size:var(--f-sm);margin-top:var(--s0)">' +
-        entries.length + ' program' + (entries.length === 1 ? "" : "s") +
-        (clashes ? ' &middot; <strong style="color:var(--poppy)">' + clashes + ' overlap' + (clashes === 1 ? "" : "s") + '</strong>' : ' &middot; no clashes') + '</p></div>' +
+        entries.length + ' saved' +
+        (clashes ? ' &middot; <strong style="color:var(--poppy)">' + clashes + ' overlap' + (clashes === 1 ? "" : "s") + '</strong>' : ' &middot; no clashes') +
+        (unassignedCount ? ' &middot; ' + unassignedCount + ' waiting for a name' : "") + '</p></div>' +
       '<div class="row">' +
         '<button class="btn btn-sm" type="button" data-act="export-ics">Add to calendar</button>' +
         '<button class="btn btn-sm" type="button" data-act="copy-plan">Copy as text</button>' +
@@ -1667,17 +1756,21 @@ function handleAction(act, data){
     case "open-program": { var p = programById(data.id); if (p) programModal(p); break; }
     case "close-modal": closeModal(); break;
     case "close-and-map": closeModal(); go("map"); break;
-    case "add-to-plan": {
+    case "toggle-save": {
       var sel = $("#kidsel");
-      if (!sel) return;
-      if (inPlan(data.id, sel.value)){ toast("Already in your plan."); return; }
-      state.plan.push({kidId:sel.value, programId:data.id});
-      save(); closeModal(); render();
-      toast("Pinned to your plan.");
+      var added = toggleSave(data.id, sel ? sel.value : null);
+      var prog = programById(data.id);
+      if ($("#scrim").classList.contains("open")) closeModal();
+      render();
+      if (added){
+        toast(state.kids.length ? "Saved to your plan." : "Saved. It's under My plan.");
+      } else {
+        toast("Removed from your plan.");
+      }
       break;
     }
     case "remove-plan":
-      state.plan = state.plan.filter(function(e){ return !(String(e.programId) === String(data.id) && e.kidId === data.kid); });
+      state.plan = state.plan.filter(function(e){ return e.sid !== data.sid; });
       save(); render();
       break;
     case "filter": filters[data.key] = (filters[data.key] === data.value) ? "all" : data.value; renderFind(); break;
@@ -1737,7 +1830,7 @@ function handleAction(act, data){
     case "copy-plan":
       copy(planEntries().map(function(e){
         var p = e.program;
-        return e.kid.name + " — " + p.name + " at " + (p.parkLabel || "a citywide league") +
+        return (e.kid ? e.kid.name + " — " : "") + p.name + " at " + (p.parkLabel || "a citywide league") +
           ([p.days, p.time].filter(Boolean).length ? " (" + [p.days, p.time].filter(Boolean).join(" ") + ")" : "") +
           (p.dateRange ? ", " + p.dateRange : "") +
           (p.enrollUrl ? "\n  register: " + p.enrollUrl : "");
@@ -1774,6 +1867,16 @@ document.addEventListener("change", function(ev){
   else if (act === "openOnly"){ filters.openOnly = ev.target.checked; renderFind(); }
   else if (act === "freeOnly"){ filters.freeOnly = ev.target.checked; renderFind(); }
   else if (act === "soonOnly"){ filters.soonOnly = ev.target.checked; renderFind(); }
+  else if (act === "assign"){
+    var entry = state.plan.filter(function(e){ return e.sid === ev.target.dataset.sid; })[0];
+    if (entry){
+      entry.kidId = ev.target.value || null;
+      save();
+      renderPlan();
+      renderPlanCount();
+      toast(ev.target.value ? "Assigned to " + kidById(ev.target.value).name + "." : "Left unassigned.");
+    }
+  }
 });
 document.addEventListener("keydown", function(ev){
   if (ev.key !== "Enter" && ev.key !== " ") return;
@@ -1812,7 +1915,7 @@ function exportIcs(){
         lines.push("DTEND:" + icsDay(first) + "T" + pad(Math.floor((mins + 60) / 60)) + pad((mins + 60) % 60) + "00");
       }
       if (weeks > 1) lines.push("RRULE:FREQ=WEEKLY;COUNT=" + weeks);
-      lines.push("SUMMARY:" + e.kid.name + " · " + p.name);
+      lines.push("SUMMARY:" + (e.kid ? e.kid.name + " · " : "") + p.name);
       lines.push("LOCATION:" + (p.parkLabel || "Minneapolis") + ", Minneapolis MN");
       lines.push("DESCRIPTION:" + (p.enrollUrl || p.detailUrl || "MPRB program"));
       lines.push("END:VEVENT");
@@ -1847,6 +1950,7 @@ function exportIcs(){
    ===================================================================== */
 function render(){
   renderAcct();
+  renderPlanCount();
   if (!catalog) return;
   if (view === "home") renderHome();
   else if (view === "find") renderFind();
@@ -1855,6 +1959,7 @@ function render(){
   else if (view === "plan") renderPlan();
 }
 renderAcct();
+renderPlanCount();
 boot();
 })();
 </script>
