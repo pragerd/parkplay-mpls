@@ -1,0 +1,1862 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ParkPlay Minneapolis</title>
+<meta name="description" content="Every Minneapolis Park Board program for kids, in one list you can filter by age, sport, weekday and distance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,500..900,0..100,0..1&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap">
+<style>
+/* =====================================================================
+   Tokens. Cream paper, ink linework, one saturated colour per activity
+   track. Spacing is a strict 8pt scale — the loose art sits on top of it.
+   ===================================================================== */
+:root{
+  --paper:#FAF7F2;
+  --paper-2:#F1EBDF;
+  --card:#FFFDF8;
+  --ink:#1B1A17;
+  --ink-2:#57524A;
+  --ink-3:#8B8478;
+  --rule:#1B1A17;
+  --hair:#DBD3C4;
+
+  --tangerine:#FF6A1F;
+  --mint:#12996A;
+  --cobalt:#2551E0;
+  --poppy:#E12B4E;
+  --sunny:#F2B417;
+  --grape:#7A3CC0;
+
+  --pop:3px 3px 0 var(--rule);
+  --pop-lg:5px 5px 0 var(--rule);
+  --pop-sm:2px 2px 0 var(--rule);
+
+  --s0:4px; --s1:8px; --s2:12px; --s3:16px; --s4:24px; --s5:32px; --s6:48px; --s7:64px; --s8:96px;
+
+  --sq:18px 14px 20px 15px;
+  --sq-sm:12px 9px 13px 10px;
+  --sq-lg:26px 20px 28px 22px;
+
+  --f-xs:12px; --f-sm:13.5px; --f-base:15.5px; --f-md:17px;
+  --f-lg:22px; --f-xl:30px; --f-2xl:clamp(34px, 5.2vw, 52px);
+
+  --display:"Fraunces", Georgia, "Times New Roman", serif;
+  --sans:"Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --hand:"Caveat", "Bradley Hand", "Segoe Script", cursive;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#17161A;
+    --paper-2:#1F1E24;
+    --card:#212027;
+    --ink:#F8F4EB;
+    --ink-2:#C6BFB2;
+    --ink-3:#938C7F;
+    --rule:#000000;
+    --hair:#332F38;
+    --tangerine:#FF8442;
+    --mint:#2BBE88;
+    --cobalt:#5C82FF;
+    --poppy:#FF5670;
+    --sunny:#FFC93F;
+    --grape:#A76BE8;
+    --pop:3px 3px 0 #000;
+    --pop-lg:5px 5px 0 #000;
+    --pop-sm:2px 2px 0 #000;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#17161A;
+  --paper-2:#1F1E24;
+  --card:#212027;
+  --ink:#F8F4EB;
+  --ink-2:#C6BFB2;
+  --ink-3:#938C7F;
+  --rule:#000000;
+  --hair:#332F38;
+  --tangerine:#FF8442;
+  --mint:#2BBE88;
+  --cobalt:#5C82FF;
+  --poppy:#FF5670;
+  --sunny:#FFC93F;
+  --grape:#A76BE8;
+  --pop:3px 3px 0 #000;
+  --pop-lg:5px 5px 0 #000;
+  --pop-sm:2px 2px 0 #000;
+}
+
+/* =====================================================================
+   Base
+   ===================================================================== */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:var(--f-base);
+  line-height:1.55;
+  font-feature-settings:"ss01";
+}
+img{max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration-thickness:2px;text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+h1,h2,h3,h4{
+  margin:0;
+  font-family:var(--display);
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:-.015em;
+  font-variation-settings:"SOFT" 60, "WONK" 1;
+  text-wrap:balance;
+}
+p{margin:0}
+.num,.data{font-variant-numeric:tabular-nums}
+.hand{font-family:var(--hand);font-size:1.22em;line-height:1.2}
+.label{
+  font-size:var(--f-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+
+/* =====================================================================
+   Doodles
+   ===================================================================== */
+.doodle{display:block;overflow:visible}
+.doodle *{
+  fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+}
+.doodle .solid{fill:currentColor;stroke:none}
+.stamp{
+  width:44px;height:44px;flex:none;
+  display:grid;place-items:center;
+  border:2px solid var(--rule);
+  border-radius:var(--sq-sm);
+  box-shadow:var(--pop-sm);
+  color:var(--ink);
+  background:var(--sunny);
+}
+.stamp svg{width:29px;height:29px}
+.stamp-sm{width:30px;height:30px;border-radius:10px 8px 11px 9px;box-shadow:none}
+.stamp-sm svg{width:19px;height:19px}
+.stamp-lg{width:62px;height:62px;border-radius:var(--sq);box-shadow:var(--pop)}
+.stamp-lg svg{width:38px;height:38px}
+:root[data-theme="dark"] .stamp{color:#151318}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .stamp{color:#151318}}
+
+.wiggle{transition:transform .16s ease}
+@media (hover:hover){
+  .wiggle:hover{animation:wobble .42s ease-in-out}
+}
+@keyframes wobble{
+  0%{transform:rotate(0)} 30%{transform:rotate(-5deg) scale(1.04)}
+  65%{transform:rotate(4deg) scale(1.04)} 100%{transform:rotate(0)}
+}
+
+/* =====================================================================
+   Layout skeleton — rigid on purpose
+   ===================================================================== */
+.wrap{max-width:1200px;margin:0 auto;padding:0 var(--s4)}
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:var(--paper);
+  border-bottom:2px solid var(--rule);
+}
+.topbar-in{display:flex;align-items:center;gap:var(--s3);min-height:68px;padding-top:var(--s2);padding-bottom:var(--s2);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:var(--s2);margin-right:auto;text-decoration:none}
+.brand-word{position:relative;display:inline-block}
+.brand-word b{
+  font-family:var(--display);font-weight:900;font-size:26px;line-height:1;
+  font-variation-settings:"SOFT" 80, "WONK" 1;letter-spacing:-.02em;display:block;
+}
+.brand-word svg{position:absolute;left:-2%;bottom:-9px;width:104%;height:9px;color:var(--tangerine)}
+.brand-sub{font-family:var(--hand);font-size:16px;color:var(--ink-2);display:block;margin-top:6px}
+.nav{display:flex;gap:var(--s0);flex-wrap:wrap}
+.nav button{
+  background:transparent;border:2px solid transparent;border-radius:var(--sq-sm);
+  padding:7px 13px;font-size:var(--f-sm);font-weight:700;color:var(--ink-2);
+}
+.nav button:hover{border-color:var(--rule);color:var(--ink)}
+.nav button[aria-current="page"]{
+  background:var(--sunny);border-color:var(--rule);color:var(--ink);box-shadow:var(--pop-sm);
+}
+:root[data-theme="dark"] .nav button[aria-current="page"]{color:#151318}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .nav button[aria-current="page"]{color:#151318}}
+
+.notebar{background:var(--paper-2);border-bottom:2px dashed var(--hair)}
+.notebar-in{display:flex;gap:var(--s2);align-items:flex-start;padding:var(--s2) var(--s4);flex-wrap:wrap}
+.notebar .hand{color:var(--tangerine);flex:none}
+.notebar p{font-size:var(--f-sm);color:var(--ink-2);max-width:110ch}
+.notebar strong{color:var(--ink)}
+
+main.wrap{padding-top:var(--s6);padding-bottom:var(--s8)}
+.view{display:none}
+.view.is-active{display:block}
+.stack{display:flex;flex-direction:column;gap:var(--s7)}
+.row{display:flex;gap:var(--s2);align-items:center;flex-wrap:wrap}
+
+.divider{display:block;width:100%;height:18px;color:var(--hair)}
+
+/* =====================================================================
+   Cards, buttons, tags
+   ===================================================================== */
+.card{
+  background:var(--card);
+  border:2px solid var(--rule);
+  border-radius:var(--sq);
+  box-shadow:var(--pop);
+}
+.card-pad{padding:var(--s4)}
+.card-flat{box-shadow:none}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s3);margin-bottom:var(--s3);flex-wrap:wrap}
+.section-head h2{font-size:var(--f-xl)}
+
+.btn{
+  display:inline-flex;align-items:center;gap:var(--s1);
+  border:2px solid var(--rule);border-radius:var(--sq-sm);
+  padding:11px 18px;font-size:var(--f-sm);font-weight:800;line-height:1;
+  text-decoration:none;background:var(--card);color:var(--ink);
+  box-shadow:var(--pop);transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:var(--pop-lg)}
+.btn:active{transform:translate(2px,2px);box-shadow:var(--pop-sm)}
+.btn-go{background:var(--tangerine)}
+.btn-cool{background:var(--cobalt);color:#FFF8EE}
+.btn-yes{background:var(--mint);color:#FFF8EE}
+.btn-sun{background:var(--sunny)}
+.btn-quiet{box-shadow:none;border-color:transparent;background:transparent;color:var(--ink-2);padding:8px 10px}
+.btn-quiet:hover{transform:none;box-shadow:none;border-color:var(--hair);color:var(--ink)}
+.btn-sm{padding:7px 12px;font-size:var(--f-xs);border-radius:10px 8px 11px 9px;box-shadow:var(--pop-sm)}
+.btn-sm:hover{box-shadow:var(--pop)}
+:root[data-theme="dark"] .btn-go,:root[data-theme="dark"] .btn-sun{color:#151318}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .btn-go,:root:not([data-theme="light"]) .btn-sun{color:#151318}
+}
+.link-inline{background:none;border:0;padding:0;font:inherit;color:var(--ink);cursor:pointer;
+  text-decoration:underline;text-decoration-color:var(--tangerine);text-decoration-thickness:2px}
+
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  border:2px solid var(--rule);border-radius:999px;
+  background:var(--card);padding:5px 12px;font-size:var(--f-xs);font-weight:700;color:var(--ink-2);
+}
+.chip:hover{background:var(--paper-2);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--rule)}
+.chip[aria-pressed="true"] .stamp-sm{box-shadow:none}
+.tag{
+  display:inline-block;font-size:var(--f-xs);font-weight:700;
+  border:1.5px solid var(--ink-3);border-radius:8px 6px 9px 7px;
+  padding:1px 7px;color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums;
+}
+.tag-open{border-color:var(--mint);color:var(--mint)}
+.tag-tight{border-color:var(--poppy);color:var(--poppy);background:color-mix(in srgb, var(--poppy) 10%, transparent)}
+.tag-free{border-color:var(--mint);background:color-mix(in srgb, var(--mint) 14%, transparent);color:var(--mint)}
+.tag-full{border-color:var(--hair);color:var(--ink-3)}
+.tag-city{border-color:var(--grape);color:var(--grape)}
+
+/* =====================================================================
+   Hero
+   ===================================================================== */
+.hero{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--s6);align-items:start;margin-bottom:var(--s7)}
+.hero h1{font-size:var(--f-2xl);margin:var(--s2) 0 var(--s3)}
+.swoosh{position:relative;display:inline-block;white-space:nowrap}
+.swoosh svg{position:absolute;left:-3%;bottom:-.18em;width:106%;height:.42em;color:var(--tangerine);z-index:-1}
+.hero-lede{font-size:var(--f-md);color:var(--ink-2);max-width:46ch}
+.hero-actions{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s4)}
+.hero-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s3);margin-top:var(--s5);padding-top:var(--s4);border-top:2px dashed var(--hair)}
+.hero-stat b{display:block;font-family:var(--display);font-weight:900;font-size:var(--f-xl);line-height:1;font-variation-settings:"SOFT" 40, "WONK" 1;font-variant-numeric:tabular-nums}
+.hero-stat span{display:block;font-size:var(--f-xs);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-top:var(--s0)}
+.setup{transform:rotate(.7deg)}
+.setup .card-pad{display:flex;flex-direction:column;gap:var(--s2)}
+.setup h3{font-size:var(--f-lg)}
+.fine{font-size:var(--f-xs);color:var(--ink-3);line-height:1.5}
+
+.kid{display:inline-flex;align-items:center;gap:var(--s1);border:2px solid var(--rule);border-radius:999px;background:var(--paper-2);padding:4px 10px 4px 4px}
+.kid .face{width:28px;height:28px;border-radius:50%;background:var(--mint);border:2px solid var(--rule);display:grid;place-items:center;font-size:12px;font-weight:800;color:#FFF8EE}
+.kid b{font-size:var(--f-sm);font-weight:800}
+.kid i{font-style:normal;font-size:var(--f-xs);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.kid button{border:0;background:transparent;color:var(--ink-3);padding:0 2px;font-size:16px;line-height:1}
+.kid button:hover{color:var(--poppy)}
+.household{display:flex;flex-wrap:wrap;gap:var(--s1)}
+
+/* =====================================================================
+   Bento tiles
+   ===================================================================== */
+.bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s3)}
+.tile{
+  display:flex;flex-direction:column;gap:var(--s1);align-items:flex-start;
+  padding:var(--s3);border:2px solid var(--rule);border-radius:var(--sq);
+  background:var(--card);box-shadow:var(--pop);text-align:left;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.tile:hover{transform:translate(-1px,-1px);box-shadow:var(--pop-lg)}
+.tile b{font-family:var(--display);font-weight:900;font-size:var(--f-xl);line-height:1;font-variation-settings:"SOFT" 40,"WONK" 1;font-variant-numeric:tabular-nums}
+.tile span{font-size:var(--f-sm);color:var(--ink-2);font-weight:600}
+.tile:nth-child(1){transform:rotate(-.5deg)}
+.tile:nth-child(2){transform:rotate(.4deg)}
+.tile:nth-child(3){transform:rotate(-.3deg)}
+.tile:nth-child(4){transform:rotate(.6deg)}
+.tile:nth-child(1):hover,.tile:nth-child(2):hover,.tile:nth-child(3):hover,.tile:nth-child(4):hover{transform:translate(-1px,-2px) rotate(0)}
+
+.pins{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:var(--s2)}
+.pin{
+  display:flex;align-items:center;gap:var(--s2);
+  border:2px solid var(--rule);border-radius:var(--sq-sm);background:var(--card);
+  padding:var(--s2);box-shadow:var(--pop-sm);text-align:left;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.pin:hover{transform:translate(-1px,-1px) rotate(-.8deg);box-shadow:var(--pop)}
+.pin b{display:block;font-size:var(--f-sm);font-weight:800;line-height:1.2}
+.pin i{font-style:normal;font-size:var(--f-xs);color:var(--ink-3);font-variant-numeric:tabular-nums}
+
+/* =====================================================================
+   Program list — the part parents scan, kept dead straight
+   ===================================================================== */
+.list{border:2px solid var(--rule);border-radius:var(--sq);background:var(--card);box-shadow:var(--pop);overflow:hidden}
+.item{
+  display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:var(--s3);align-items:center;
+  width:100%;padding:var(--s3);background:transparent;text-align:left;
+  border:0;border-bottom:2px dashed var(--hair);
+}
+.item:last-child{border-bottom:0}
+.item:hover{background:var(--paper-2)}
+.item-title{display:flex;align-items:center;gap:var(--s1);flex-wrap:wrap;font-weight:800;font-size:var(--f-base);line-height:1.25}
+.item-meta{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s0);font-size:var(--f-xs);color:var(--ink-2);font-weight:500;font-variant-numeric:tabular-nums}
+.item-meta span{white-space:nowrap;display:inline-flex;align-items:center}
+.item-meta span:not(:last-child)::after{content:"·";margin-left:var(--s2);color:var(--ink-3);font-weight:700}
+.item-right{display:flex;flex-direction:column;align-items:flex-end;gap:var(--s0)}
+.item-right.acts{flex-direction:row;align-items:center;gap:var(--s1)}
+.dist{font-size:var(--f-sm);font-weight:800;font-variant-numeric:tabular-nums}
+.empty{padding:var(--s6) var(--s4);text-align:center;color:var(--ink-2);font-size:var(--f-sm)}
+.empty .hand{display:block;color:var(--tangerine);margin-bottom:var(--s1);font-size:22px}
+
+/* =====================================================================
+   Finder
+   ===================================================================== */
+.finder{display:grid;grid-template-columns:264px minmax(0,1fr);gap:var(--s5);align-items:start}
+.rail{
+  position:sticky;top:88px;
+  border:2px solid var(--rule);border-radius:var(--sq);background:var(--card);box-shadow:var(--pop);
+  padding:var(--s3);display:flex;flex-direction:column;gap:var(--s4);
+  max-height:calc(100vh - 116px);overflow-y:auto;
+}
+.fgroup{display:flex;flex-direction:column;gap:var(--s1)}
+.fchips{display:flex;flex-wrap:wrap;gap:6px}
+select,input[type="text"],input[type="search"]{
+  width:100%;background:var(--paper);border:2px solid var(--rule);border-radius:var(--sq-sm);
+  padding:9px 11px;font-size:var(--f-sm);font-weight:600;
+}
+input[type="range"]{width:100%;accent-color:var(--tangerine)}
+.switch{display:flex;align-items:center;gap:var(--s1);font-size:var(--f-sm);font-weight:600;color:var(--ink-2)}
+.switch input{accent-color:var(--tangerine);width:17px;height:17px}
+.result-head{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s3);flex-wrap:wrap}
+.result-count{font-size:var(--f-sm);color:var(--ink-2);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* =====================================================================
+   Map
+   ===================================================================== */
+.maplayout{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--s5);align-items:start}
+.mapcard{border:2px solid var(--rule);border-radius:var(--sq);background:var(--card);box-shadow:var(--pop);padding:var(--s2)}
+.mapcard svg.map{display:block;width:100%;height:auto}
+.maplegend{display:flex;gap:var(--s3);flex-wrap:wrap;padding:var(--s2) var(--s1) 0;font-size:var(--f-xs);font-weight:600;color:var(--ink-2)}
+.maplegend i{width:11px;height:11px;border:1.5px solid var(--rule);border-radius:3px;display:inline-block;margin-right:5px;vertical-align:-1px}
+.park-dot{cursor:pointer}
+.park-dot:hover circle.hit,.park-dot:focus circle.hit{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:2 3}
+.slots{display:flex;flex-direction:column;gap:var(--s1)}
+.slot{display:flex;align-items:center;gap:var(--s2);padding:10px var(--s2);border:2px dashed var(--hair);border-radius:var(--sq-sm);font-size:var(--f-sm);color:var(--ink-3);font-weight:600}
+.slot.on{border-style:solid;border-color:var(--rule);background:var(--paper-2);color:var(--ink)}
+.slot .n{font-family:var(--display);font-weight:900;font-size:var(--f-md);color:var(--ink-3);width:16px;text-align:center}
+.slot.on .n{color:var(--poppy)}
+.near-scroll{max-height:560px;overflow-y:auto}
+.near{display:grid;grid-template-columns:30px minmax(0,1fr) auto auto;gap:var(--s2);align-items:center;padding:10px var(--s3);border-bottom:2px dashed var(--hair)}
+.near:last-child{border-bottom:0}
+.near:hover{background:var(--paper-2)}
+.near .rank{font-family:var(--display);font-weight:900;font-size:var(--f-sm);color:var(--ink-3);font-variant-numeric:tabular-nums}
+.near b{font-size:var(--f-sm);font-weight:800;display:block;line-height:1.2}
+.near i{font-style:normal;font-size:var(--f-xs);color:var(--ink-3);display:block;font-variant-numeric:tabular-nums}
+
+/* =====================================================================
+   Quiz
+   ===================================================================== */
+.quiz{max-width:720px;margin:0 auto}
+.track{height:14px;border:2px solid var(--rule);border-radius:999px;background:var(--card);overflow:hidden;margin:var(--s3) 0 var(--s5)}
+.track i{display:block;height:100%;background:var(--tangerine);border-right:2px solid var(--rule);transition:width .3s ease}
+.qtitle{font-size:var(--f-xl);margin-bottom:var(--s1)}
+.qhelp{color:var(--ink-2);font-size:var(--f-sm);margin-bottom:var(--s4)}
+.opts{display:grid;gap:var(--s2)}
+.opt{
+  display:flex;gap:var(--s3);align-items:center;text-align:left;
+  padding:var(--s3);border:2px solid var(--rule);border-radius:var(--sq);background:var(--card);
+  box-shadow:var(--pop);transition:transform .12s ease, box-shadow .12s ease;
+}
+.opt:hover{transform:translate(-1px,-1px);box-shadow:var(--pop-lg);background:var(--paper-2)}
+.opt .key{font-family:var(--display);font-weight:900;font-size:var(--f-md);color:var(--ink-3);width:20px;flex:none;text-align:center}
+.opt b{display:block;font-weight:800;font-size:var(--f-base)}
+.opt span{display:block;font-size:var(--f-sm);color:var(--ink-2)}
+.verdict{display:flex;gap:var(--s3);align-items:center;padding:var(--s4);border:2px solid var(--rule);border-radius:var(--sq);background:var(--sunny);box-shadow:var(--pop-lg);margin-bottom:var(--s4);color:var(--ink)}
+:root[data-theme="dark"] .verdict{color:#151318}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .verdict{color:#151318}}
+.verdict h3{font-size:var(--f-lg)}
+.meter{width:110px;height:12px;border:2px solid var(--rule);border-radius:999px;background:var(--card);overflow:hidden;flex:none}
+.meter i{display:block;height:100%;background:var(--mint)}
+
+/* =====================================================================
+   Plan
+   ===================================================================== */
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:var(--s1)}
+.day{border:2px solid var(--rule);border-radius:var(--sq-sm);background:var(--card);padding:var(--s1);min-height:104px;display:flex;flex-direction:column;gap:6px}
+.day > .label{font-size:11px}
+.sess{border-left:4px solid var(--ink);background:var(--paper-2);border-radius:0 8px 8px 0;padding:6px 7px}
+.sess b{display:block;font-size:11.5px;font-weight:800;line-height:1.25}
+.sess i{font-style:normal;display:block;font-size:11px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.money{display:flex;justify-content:space-between;gap:var(--s3);font-size:var(--f-sm);padding:6px 0;border-bottom:2px dashed var(--hair)}
+.money:last-of-type{border-bottom:0}
+
+/* =====================================================================
+   Modal
+   ===================================================================== */
+.scrim{position:fixed;inset:0;background:rgba(27,26,23,.55);z-index:60;display:none;padding:var(--s4);overflow-y:auto}
+.scrim.open{display:block}
+.modal{max-width:660px;margin:var(--s6) auto;background:var(--card);border:2px solid var(--rule);border-radius:var(--sq-lg);box-shadow:8px 8px 0 var(--rule);overflow:hidden}
+.modal-head{display:flex;gap:var(--s3);align-items:flex-start;padding:var(--s4);border-bottom:2px solid var(--rule)}
+.modal-head h3{font-size:var(--f-lg);margin-bottom:var(--s0)}
+.modal-head .sub{font-size:var(--f-xs);color:var(--ink-2);font-weight:600}
+.x{margin-left:auto;flex:none;width:34px;height:34px;border:2px solid var(--rule);border-radius:10px 8px 11px 9px;background:var(--paper-2);font-size:17px;line-height:1;box-shadow:var(--pop-sm)}
+.x:hover{background:var(--poppy);color:#FFF8EE}
+.modal-body{padding:var(--s4);display:flex;flex-direction:column;gap:var(--s3)}
+.blurb{font-size:var(--f-sm);color:var(--ink-2);max-height:200px;overflow-y:auto;padding-right:var(--s1)}
+dl.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s2) var(--s3);font-size:var(--f-sm);margin:0}
+dl.facts dt{font-size:var(--f-xs);font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding-top:2px}
+dl.facts dd{margin:0}
+.modal-foot{display:flex;gap:var(--s2);padding:var(--s3) var(--s4);border-top:2px dashed var(--hair);background:var(--paper-2);flex-wrap:wrap;align-items:center}
+.field{display:flex;flex-direction:column;gap:var(--s0)}
+.field label{font-size:var(--f-xs);font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+
+.toast{
+  position:fixed;left:50%;bottom:var(--s4);transform:translateX(-50%) translateY(200%);
+  background:var(--ink);color:var(--paper);border:2px solid var(--rule);border-radius:var(--sq-sm);
+  padding:11px 18px;font-size:var(--f-sm);font-weight:700;z-index:80;box-shadow:var(--pop);
+  transition:transform .24s cubic-bezier(.2,1.4,.4,1);max-width:90vw;
+}
+.toast.up{transform:translateX(-50%) translateY(0)}
+.toast:empty{display:none}
+
+.loading{display:flex;flex-direction:column;align-items:center;gap:var(--s3);padding:var(--s8) var(--s4);color:var(--ink-2)}
+.loading .hand{font-size:24px;color:var(--tangerine)}
+.spinner{width:34px;height:34px;color:var(--tangerine);animation:spin 1.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+footer.site{border-top:2px solid var(--rule);background:var(--paper-2);padding:var(--s5) 0 var(--s7)}
+footer.site p{font-size:var(--f-sm);color:var(--ink-2);max-width:88ch}
+footer.site .hand{color:var(--tangerine);font-size:20px;display:block;margin-bottom:var(--s1)}
+
+/* =====================================================================
+   Responsive
+   ===================================================================== */
+@media (max-width:1000px){
+  .hero{grid-template-columns:1fr;gap:var(--s5)}
+  .finder{grid-template-columns:1fr}
+  .rail{position:static;max-height:none}
+  .maplayout{grid-template-columns:1fr}
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .week{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+  .wrap{padding:0 var(--s3)}
+  .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .item{grid-template-columns:40px minmax(0,1fr);row-gap:var(--s1)}
+  .item-right{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}
+  .near{grid-template-columns:24px minmax(0,1fr);row-gap:6px}
+  .week{grid-template-columns:1fr}
+  .brand-sub{display:none}
+  .bento{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+  .wiggle:hover{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- One rough-ink filter, reused by every drawing on the page. -->
+<svg class="defs" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="rough" x="-12%" y="-12%" width="124%" height="124%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="3" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.7" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rougher" x="-14%" y="-14%" width="128%" height="128%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <pattern id="hatch" width="7" height="7" patternTransform="rotate(38)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="currentColor" stroke-width="1.4" stroke-opacity=".5"/>
+    </pattern>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <a class="brand" href="#" data-nav="home">
+      <span class="stamp wiggle" style="background:var(--tangerine)" aria-hidden="true">
+        <svg class="doodle" viewBox="0 0 32 32" filter="url(#rough)"><circle cx="16" cy="16" r="10.5"/><path d="M16 9.5l4.6 3.4-1.8 5.6h-5.6L11.4 13z"/><path d="M16 5.5v4M25.6 13.4l-3.9 2.7M22.5 27l-2.3-3.6M9.5 27l2.3-3.6M6.4 13.4l3.9 2.7"/></svg>
+      </span>
+      <span class="brand-word">
+        <b>ParkPlay</b>
+        <svg viewBox="0 0 120 9" preserveAspectRatio="none" aria-hidden="true" filter="url(#rough)"><path d="M1 6c22-4 44-5 66-3 18 1.6 34 2.6 52 1" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
+        <span class="brand-sub">Minneapolis parks, for kids</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <button type="button" data-nav="home" aria-current="page">Home</button>
+      <button type="button" data-nav="find">Find a program</button>
+      <button type="button" data-nav="map">Parks map</button>
+      <button type="button" data-nav="quiz">Match quiz</button>
+      <button type="button" data-nav="plan">My plan</button>
+    </nav>
+    <div id="acct"></div>
+  </div>
+</header>
+
+<div class="notebar">
+  <div class="wrap notebar-in" id="provenance">
+    <span class="hand">psst —</span>
+    <p>Listings come straight from the Park Board's own registration system.</p>
+  </div>
+</div>
+
+<main class="wrap">
+  <section id="view-home" class="view is-active"></section>
+  <section id="view-find" class="view"></section>
+  <section id="view-map" class="view"></section>
+  <section id="view-quiz" class="view"></section>
+  <section id="view-plan" class="view"></section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span class="hand">made by a parent, not by the park board</span>
+    <p>An independent front end for Minneapolis Park &amp; Recreation Board programs, not affiliated with or endorsed by MPRB. Registration, payment, refunds and fee assistance all happen on MPRB's own site. Questions about a real registration: 612-230-6400 weekdays 8 am to 4:30 pm, or ask at any recreation center.</p>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* =====================================================================
+   Doodle set. Drawn as plain primitives and roughened by the SVG filter,
+   which keeps the linework wobbly without hand-jittering path data.
+   ===================================================================== */
+var D = {
+  soccer:'<circle cx="16" cy="16" r="10.5"/><path d="M16 9.5l4.6 3.4-1.8 5.6h-5.6L11.4 13z"/><path d="M16 5.5v4M25.6 13.4l-3.9 2.7M22.5 27l-2.3-3.6M9.5 27l2.3-3.6M6.4 13.4l3.9 2.7"/>',
+  basketball:'<circle cx="16" cy="16" r="10.5"/><path d="M16 5.5v21M5.5 16h21"/><path d="M8.6 8.6c4.6 3.8 4.6 11 0 14.8M23.4 8.6c-4.6 3.8-4.6 11 0 14.8"/>',
+  volleyball:'<circle cx="16" cy="16" r="10.5"/><path d="M16 5.6c-4 6-4 15 0 20.8M6.2 12.4c6.4 1 12 5 15.2 10.4M25.8 12.4c-6.4 1-12 5-15.2 10.4"/>',
+  football:'<ellipse cx="16" cy="16" rx="11" ry="7" transform="rotate(-24 16 16)"/><path d="M11.4 20.6l9.2-9.2M13.6 15.4l1.6 1.6M16.8 12.2l1.6 1.6"/>',
+  baseball:'<circle cx="16" cy="16" r="10.5"/><path d="M10.6 7.2c3.4 5.4 3.4 12.2 0 17.6M21.4 7.2c-3.4 5.4-3.4 12.2 0 17.6"/><path d="M12.6 11h-2M12.6 16h-2M12.6 21h-2M21.4 11h-2M21.4 16h-2M21.4 21h-2"/>',
+  softball:'<circle cx="16" cy="16" r="10.5"/><path d="M9.4 9c4 3.6 6 8.6 6 14M22.6 9c-4 3.6-6 8.6-6 14"/><path d="M12 8.4l-1.4 1.6M14 7.4l-1.2 1.8"/>',
+  hockey:'<path d="M9 6.5l6.5 13.5 8.5 2"/><ellipse cx="10" cy="25" rx="4.5" ry="2.4"/><path d="M5.5 25c0-1.4 2-2.4 4.5-2.4"/>',
+  skating:'<path d="M10 6.5h6.5c0 5.5 2 7.5 5.5 8.5v5H10z"/><path d="M6.5 23.5h19"/><path d="M9 20.5v3M22 20.5v3M26 23.5c1 1 1 2 0 2.5"/>',
+  volley2:'<circle cx="16" cy="16" r="10.5"/>',
+  wrestling:'<path d="M5.5 13.5h21v5h-21z"/><path d="M13.5 11.5l4.5 9.5M18.5 11.5l-4.5 9.5"/><path d="M5.5 18.5c-1.5 1.5-1.5 3.5 0 5M26.5 18.5c1.5 1.5 1.5 3.5 0 5"/>',
+  gymnastics:'<circle cx="12" cy="8.5" r="3"/><path d="M12 11.5v6l-4 8M12 17.5l5 8"/><path d="M15 14c5-3 9 2 12-1"/>',
+  track:'<circle cx="16" cy="18" r="9"/><path d="M12.5 6.5h7M16 9v-2.5M16 18l4.5-3"/><path d="M23.5 9.5l2-2M8.5 9.5l-2-2"/>',
+  lacrosse:'<path d="M8 26l9-9"/><path d="M17 17c-2.5-2.5-2.5-6 0-8.5s6-2.5 8.5 0 2.5 6 0 8.5-6 2.5-8.5 0z"/><path d="M18.5 10.5l5.5 5.5M22 9l2 2"/>',
+  tennis:'<ellipse cx="14" cy="13" rx="7" ry="8.5" transform="rotate(24 14 13)"/><path d="M18.5 19.5l6 7.5"/><path d="M9.5 10.5l8 5M11 16.5l6.5-8"/>',
+  swim:'<circle cx="11" cy="10" r="3"/><path d="M14 13l6-3.5"/><path d="M4.5 20c3.5-3 6 3 9.5 0s6 3 9.5 0 4-1 4-1M4.5 26c3.5-3 6 3 9.5 0s6 3 9.5 0 4-1 4-1"/>',
+  golf:'<path d="M11 6.5v20"/><path d="M11 7.5l10 3.5-10 4z"/><path d="M5.5 26.5c6-3.5 15-3.5 21 0"/>',
+  archery:'<path d="M10.5 6c8.5 3 8.5 17 0 20"/><path d="M10.5 6v20"/><path d="M8 16h15M19.5 12.5L23 16l-3.5 3.5"/>',
+  martialarts:'<path d="M6 14h20v5H6z"/><path d="M13 12l4.5 10M19 12l-4.5 10"/>',
+  dance:'<circle cx="12" cy="23" r="4"/><path d="M16 23V7.5"/><path d="M16 7.5c4.5 1 7 3.5 6.5 7"/>',
+  multisport:'<path d="M13 24.5l3-14.5 3 14.5z"/><path d="M9.5 25.5h13"/><circle cx="24" cy="20" r="4"/>',
+  fitness:'<path d="M8 16h16"/><path d="M6.5 11.5v9M25.5 11.5v9M11 9.5v13M21 9.5v13"/>',
+  outdoors:'<path d="M16 5.5l6 8.5h-12z"/><path d="M16 11.5l7.5 10.5H8.5z"/><path d="M16 22v4.5"/><path d="M6 27.5h4M13 27.5h6M22 27.5h4"/>',
+  arts:'<path d="M23 6.5l-9.5 13"/><path d="M20.5 9.5l3 3"/><path d="M12 19.5c-2.5 3-3.5 5-4.5 7.5 3-1 5-2 7.5-4.5z"/>',
+  cooking:'<path d="M7.5 19.5c0 4.5 3.5 7 8.5 7s8.5-2.5 8.5-7z"/><path d="M11.5 18l4.5-11M16 18V7M20.5 18L16 7"/>',
+  preschool:'<path d="M6.5 17h8v8h-8zM17.5 17h8v8h-8zM12 8h8v8h-8z" />',
+  schoolout:'<path d="M9 13.5c0-4 3-6.5 7-6.5s7 2.5 7 6.5v11.5H9z"/><path d="M9 18.5h14"/><path d="M13 11c1-3.5 5-3.5 6 0"/>',
+  camps:'<path d="M16 7l9.5 18h-19z"/><path d="M16 25V13"/><circle cx="25" cy="8" r="2.5"/>',
+  teen:'<path d="M7 20v-4a9 9 0 0118 0v4"/><path d="M5.5 20h4v6h-4zM22.5 20h4v6h-4z"/>',
+  events:'<ellipse cx="14" cy="12.5" rx="7" ry="8"/><path d="M14 20.5c2 3.5-2 4.5 0 8"/><path d="M24 9l2-2M25 16l2.5.5M22 5l.5-2.5"/>',
+  other:'<path d="M16 6l3.2 7.2 7.8 1-5.6 5.4 1.4 7.6-6.8-3.6-6.8 3.6 1.4-7.6L5 14.2l7.8-1z"/>'
+};
+function icon(key, filter){
+  var body = D[key] || D.other;
+  return '<svg class="doodle" viewBox="0 0 32 32" aria-hidden="true" focusable="false" filter="url(#' + (filter || "rough") + ')">' + body + '</svg>';
+}
+
+/* Category vocabulary: a doodle and a colour track for each.
+   Sports run tangerine, nature mint, water cobalt, arts poppy,
+   little-kid and event things sunny, teen and dance grape. */
+var CATS = {
+  soccer:      {name:"Soccer",           icon:"soccer",      track:"tangerine", sport:true},
+  basketball:  {name:"Basketball",       icon:"basketball",  track:"tangerine", sport:true},
+  volleyball:  {name:"Volleyball",       icon:"volleyball",  track:"tangerine", sport:true},
+  football:    {name:"Football",         icon:"football",    track:"tangerine", sport:true},
+  baseball:    {name:"Baseball",         icon:"baseball",    track:"tangerine", sport:true},
+  softball:    {name:"Softball",         icon:"softball",    track:"tangerine", sport:true},
+  hockey:      {name:"Hockey",           icon:"hockey",      track:"cobalt",    sport:true},
+  skating:     {name:"Skating",          icon:"skating",     track:"cobalt",    sport:true},
+  wrestling:   {name:"Wrestling",        icon:"wrestling",   track:"tangerine", sport:true},
+  gymnastics:  {name:"Gymnastics",       icon:"gymnastics",  track:"tangerine", sport:true},
+  track:       {name:"Track & running",  icon:"track",       track:"tangerine", sport:true},
+  lacrosse:    {name:"Lacrosse",         icon:"lacrosse",    track:"tangerine", sport:true},
+  tennis:      {name:"Racquet sports",   icon:"tennis",      track:"mint",      sport:true},
+  swim:        {name:"Swimming",         icon:"swim",        track:"cobalt",    sport:true},
+  golf:        {name:"Golf",             icon:"golf",        track:"mint",      sport:true},
+  archery:     {name:"Archery",          icon:"archery",     track:"mint",      sport:true},
+  martialarts: {name:"Martial arts",     icon:"martialarts", track:"tangerine", sport:true},
+  multisport:  {name:"Multi-sport",      icon:"multisport",  track:"tangerine", sport:true},
+  fitness:     {name:"Open gym",         icon:"fitness",     track:"tangerine", sport:true},
+  dance:       {name:"Dance",            icon:"dance",       track:"grape",     sport:true},
+  outdoors:    {name:"Outdoors",         icon:"outdoors",    track:"mint"},
+  arts:        {name:"Art & music",      icon:"arts",        track:"poppy"},
+  cooking:     {name:"Cooking",          icon:"cooking",     track:"poppy"},
+  preschool:   {name:"Preschool & tots", icon:"preschool",   track:"sunny"},
+  schoolout:   {name:"School-out days",  icon:"schoolout",   track:"sunny"},
+  camps:       {name:"Camps",            icon:"camps",       track:"sunny"},
+  teen:        {name:"Teen programs",    icon:"teen",        track:"grape"},
+  events:      {name:"Events",           icon:"events",      track:"sunny"},
+  other:       {name:"Everything else",  icon:"other",       track:"paper-2"}
+};
+var TEAM_SPORTS = ["soccer","basketball","volleyball","hockey","football","baseball","softball","wrestling","lacrosse"];
+
+var DAY_ORDER = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+var DAY_INDEX = {Sun:0, Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6};
+var DAY_TOKENS = {
+  m:"Mon", mo:"Mon", mon:"Mon", monday:"Mon",
+  tu:"Tue", tue:"Tue", tues:"Tue", tuesday:"Tue", t:"Tue",
+  w:"Wed", we:"Wed", wed:"Wed", wednesday:"Wed",
+  th:"Thu", thu:"Thu", thur:"Thu", thurs:"Thu", thursday:"Thu",
+  f:"Fri", fr:"Fri", fri:"Fri", friday:"Fri",
+  sa:"Sat", sat:"Sat", saturday:"Sat", s:"Sat",
+  su:"Sun", sun:"Sun", sunday:"Sun"
+};
+
+/* =====================================================================
+   State
+   ===================================================================== */
+var STORE_KEY = "parkplay.v3";
+var catalog = null, loadError = null;
+var state = {kids:[], plan:[], preferred:[], home:null};
+var DEFAULTS = {cat:"all", age:"all", day:"all", radius:12, parkId:null, openOnly:true, freeOnly:false, soonOnly:false, sort:"distance", q:""};
+var filters = Object.assign({}, DEFAULTS);
+var view = "home";
+var quizStep = 0, quizAnswers = [];
+
+try {
+  var saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
+  if (saved){
+    state.kids = saved.kids || [];
+    state.plan = saved.plan || [];
+    state.preferred = saved.preferred || [];
+    state.home = saved.home || null;
+  }
+} catch (e) { /* private window, or a first visit */ }
+function save(){
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* nothing to do */ }
+}
+
+/* =====================================================================
+   Helpers
+   ===================================================================== */
+var $ = function(sel, root){ return (root || document).querySelector(sel); };
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+  });
+}
+function cat(key){ return CATS[key] || CATS.other; }
+function trackColor(key){ return "var(--" + cat(key).track + ")"; }
+/* The catch-all track is blank paper, which disappears when used as a line. */
+function lineColor(key){ return cat(key).track === "paper-2" ? "var(--ink-3)" : trackColor(key); }
+function stamp(key, size){
+  return '<span class="stamp ' + (size || "") + ' wiggle" style="background:' + trackColor(key) + '">' + icon(cat(key).icon) + '</span>';
+}
+function toast(msg){
+  var el = $("#toast");
+  el.textContent = msg;
+  el.classList.add("up");
+  clearTimeout(el._t);
+  el._t = setTimeout(function(){ el.classList.remove("up"); }, 3000);
+}
+function haversine(aLat, aLng, bLat, bLng){
+  var R = 3958.8, rad = Math.PI / 180;
+  var dLat = (bLat - aLat) * rad, dLng = (bLng - aLng) * rad;
+  var h = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(aLat*rad) * Math.cos(bLat*rad) * Math.sin(dLng/2) * Math.sin(dLng/2);
+  return R * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+}
+var parkIndex = {};
+function park(id){ return parkIndex[id] || null; }
+function distTo(id){
+  var p = park(id);
+  if (!p || !state.home || p.lat == null) return null;
+  return haversine(state.home.lat, state.home.lng, p.lat, p.lng);
+}
+function fmtDist(d){
+  if (d == null) return "—";
+  if (d < 0.15) return "right there";
+  return (d < 10 ? d.toFixed(1) : Math.round(d)) + " mi";
+}
+function parseDays(str){
+  if (!str) return [];
+  var out = [];
+  String(str).split(/[,/&]|\s+and\s+|\s+/).forEach(function(part){
+    var day = DAY_TOKENS[part.trim().toLowerCase().replace(/\./g, "")];
+    if (day && out.indexOf(day) < 0) out.push(day);
+  });
+  return out;
+}
+function timeMinutes(range){
+  var s = String(range || "");
+  if (/^\s*noon/i.test(s)) return 720;
+  var m = /(\d{1,2}):(\d{2})\s*([AaPp])/.exec(s);
+  if (!m){
+    var h = /^\s*(\d{1,2})\s*([AaPp])/.exec(s);
+    if (!h) return null;
+    var hh = parseInt(h[1], 10) % 12;
+    return (h[2].toLowerCase() === "p" ? hh + 12 : hh) * 60;
+  }
+  var hr = parseInt(m[1], 10) % 12;
+  if (m[3].toLowerCase() === "p") hr += 12;
+  return hr * 60 + parseInt(m[2], 10);
+}
+function daysFromNow(iso){
+  if (!iso) return null;
+  var d = new Date(iso + "T00:00:00");
+  return isNaN(d) ? null : Math.round((d - new Date()) / 86400000);
+}
+function ageLabel(p){
+  if (p.gradeMin != null && p.gradeMax != null) return "grades " + (p.gradeMin === 0 ? "K" : p.gradeMin) + "–" + p.gradeMax;
+  if (p.ageMin != null && p.ageMax != null) return "ages " + p.ageMin + "–" + (p.ageMax - 1);
+  if (p.ageMax != null) return "under " + p.ageMax;
+  if (p.ageMin != null) return p.ageMin + " and up";
+  return "all ages";
+}
+function fitsAge(p, age){
+  if (age == null || age === "all") return true;
+  var a = Number(age);
+  if (p.ageMin != null && a < p.ageMin) return false;
+  if (p.ageMax != null && a >= p.ageMax) return false;
+  return true;
+}
+function isFree(p){ return /^free$/i.test((p.feeLabel || "").trim()); }
+function spotsTag(p){
+  if (p.citywide && p.openings == null) return '<span class="tag tag-city">sign-up list</span>';
+  if (p.openings == null) return '<span class="tag">spots not listed</span>';
+  if (p.openings <= 0) return '<span class="tag tag-full">full</span>';
+  if (p.openings <= 3) return '<span class="tag tag-tight">' + p.openings + ' left</span>';
+  return '<span class="tag tag-open">' + p.openings + ' spots</span>';
+}
+function programById(id){
+  for (var i = 0; i < catalog.programs.length; i++){
+    if (String(catalog.programs[i].id) === String(id)) return catalog.programs[i];
+  }
+  return null;
+}
+function kidById(id){
+  for (var i = 0; i < state.kids.length; i++) if (state.kids[i].id === id) return state.kids[i];
+  return null;
+}
+function inPlan(programId, kidId){
+  return state.plan.some(function(e){ return String(e.programId) === String(programId) && (!kidId || e.kidId === kidId); });
+}
+function shortName(name){ return String(name || "").replace(/\s+(Park|Recreation Center|Community Center|Field Park|Regional Park)$/i, ""); }
+function wavyDivider(){
+  return '<svg class="divider" viewBox="0 0 1200 18" preserveAspectRatio="none" aria-hidden="true" filter="url(#rough)">' +
+    '<path d="M0 11c60-9 120 9 180 0s120-9 180 0 120 9 180 0 120-9 180 0 120 9 180 0 120-9 180 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>';
+}
+function swoosh(text){
+  return '<span class="swoosh">' + esc(text) +
+    '<svg viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true" filter="url(#rough)">' +
+    '<path d="M3 9c40-6 90-7 130-3 25 2.5 45 3.5 64 2" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" opacity=".38"/></svg></span>';
+}
+
+/* =====================================================================
+   Load
+   ===================================================================== */
+function boot(){
+  if (window.__PARKPLAY_DATA__){ ready(window.__PARKPLAY_DATA__); return; }
+  $("#view-home").innerHTML =
+    '<div class="loading">' +
+      '<svg class="spinner doodle" viewBox="0 0 32 32" filter="url(#rough)"><circle cx="16" cy="16" r="11"/><path d="M16 5v6"/></svg>' +
+      '<span class="hand">digging through the park board&rsquo;s lists…</span>' +
+    '</div>';
+  fetch("data/programs.json", {cache:"no-cache"})
+    .then(function(res){ if (!res.ok) throw new Error("HTTP " + res.status); return res.json(); })
+    .then(ready)
+    .catch(function(err){ loadError = err.message; renderLoadError(); });
+}
+function ready(data){
+  catalog = data;
+  catalog.all = data.programs || [];
+  catalog.programs = catalog.all.filter(function(p){ return p.audience !== "adult"; });
+
+  var counts = {};
+  catalog.programs.forEach(function(p){ if (p.parkId) counts[p.parkId] = (counts[p.parkId] || 0) + 1; });
+  parkIndex = {};
+  catalog.parks = (data.parks || []).map(function(p){
+    return Object.assign({}, p, {programCount: counts[p.id] || 0});
+  });
+  catalog.parks.forEach(function(p){ parkIndex[p.id] = p; });
+
+  catalog.cats = Object.keys(catalog.programs.reduce(function(m, p){ m[p.category] = 1; return m; }, {}))
+    .sort(function(a, b){
+      var ta = TEAM_SPORTS.indexOf(a), tb = TEAM_SPORTS.indexOf(b);
+      if (ta >= 0 && tb >= 0) return ta - tb;
+      if (ta >= 0) return -1;
+      if (tb >= 0) return 1;
+      var sa = cat(a).sport ? 0 : 1, sb = cat(b).sport ? 0 : 1;
+      if (sa !== sb) return sa - sb;
+      return cat(a).name.localeCompare(cat(b).name);
+    });
+  renderProvenance();
+  render();
+}
+function renderLoadError(){
+  $("#view-home").innerHTML =
+    '<div class="card card-pad" style="max-width:640px;margin:var(--s6) auto;text-align:center">' +
+      '<span class="hand" style="color:var(--poppy);font-size:22px">well, that didn&rsquo;t work</span>' +
+      '<h2 style="font-size:var(--f-lg);margin:var(--s1) 0 var(--s2)">The program list didn&rsquo;t load</h2>' +
+      '<p style="color:var(--ink-2);font-size:var(--f-sm);margin-bottom:var(--s4)">' + esc(loadError) +
+      '. This page reads a JSON file that sits next to it, so opening the HTML straight off your disk won&rsquo;t work. Serve the folder, or use the hosted link.</p>' +
+      '<a class="btn btn-go" href="https://anc.apm.activecommunities.com/mplsparkandrec/activity/search?onlineSiteId=0&activity_select_param=2&max_age=17&viewMode=list" target="_blank" rel="noopener">Go straight to MPRB</a>' +
+    '</div>';
+}
+function renderProvenance(){
+  var when = catalog.generatedAt ? new Date(catalog.generatedAt) : null;
+  var stamped = when ? when.toLocaleString(undefined, {month:"long", day:"numeric", hour:"numeric", minute:"2-digit"}) : "recently";
+  $("#provenance").innerHTML =
+    '<span class="hand">psst —</span>' +
+    '<p><strong>' + catalog.programs.length + ' programs for kids</strong>, read straight out of the Park Board&rsquo;s registration system on ' + esc(stamped) +
+    '. The spots and dates are theirs. Every register button here opens the real listing on ' +
+    '<a href="https://anc.apm.activecommunities.com/mplsparkandrec/activity/search?onlineSiteId=0&activity_select_param=2&max_age=17&viewMode=list" target="_blank" rel="noopener">MPRB Online Recreation Services</a>.</p>';
+}
+
+/* =====================================================================
+   Navigation
+   ===================================================================== */
+function go(next){
+  view = next;
+  ["home","find","map","quiz","plan"].forEach(function(v){
+    $("#view-" + v).classList.toggle("is-active", v === next);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".nav button"), function(b){
+    if (b.dataset.nav === next) b.setAttribute("aria-current", "page");
+    else b.removeAttribute("aria-current");
+  });
+  render();
+  window.scrollTo({top:0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+}
+document.addEventListener("click", function(ev){
+  var nav = ev.target.closest("[data-nav]");
+  if (nav){ ev.preventDefault(); go(nav.dataset.nav); return; }
+  var act = ev.target.closest("[data-act]");
+  if (act) handleAction(act.dataset.act, act.dataset);
+});
+
+/* =====================================================================
+   Household control
+   ===================================================================== */
+function renderAcct(){
+  var el = $("#acct");
+  if (!el) return;
+  if (state.kids.length){
+    el.innerHTML = '<button class="btn btn-sun btn-sm" type="button" data-act="household">' +
+      esc(state.kids.length === 1 ? state.kids[0].name : state.kids.length + " kids") + '</button>';
+  } else {
+    el.innerHTML = '<button class="btn btn-go btn-sm" type="button" data-act="add-kid">Add your kid</button>';
+  }
+}
+function renderHousehold(){
+  var el = $("#household");
+  if (!el) return;
+  el.innerHTML = state.kids.map(function(k){
+    return '<span class="kid"><span class="face">' + esc(k.name.slice(0,1).toUpperCase()) + '</span>' +
+      '<span><b>' + esc(k.name) + '</b> <i>age ' + k.age + '</i></span>' +
+      '<button type="button" data-act="remove-kid" data-id="' + k.id + '" aria-label="Remove ' + esc(k.name) + '">×</button></span>';
+  }).join("");
+}
+
+/* =====================================================================
+   Home
+   ===================================================================== */
+function forKids(list){
+  if (!state.kids.length) return list;
+  return list.filter(function(p){
+    return state.kids.some(function(k){ return fitsAge(p, k.age); });
+  });
+}
+function renderHome(){
+  var pool = forKids(catalog.programs);
+  var open = pool.filter(function(p){ return p.openings == null || p.openings > 0; });
+  var soon = open.filter(function(p){
+    var d = daysFromNow(p.dateStart);
+    return d != null && d >= -3 && d <= 21;
+  });
+  var tight = open.filter(function(p){ return p.openings != null && p.openings > 0 && p.openings <= 3; });
+  var free = open.filter(isFree);
+  var teams = pool.filter(function(p){ return TEAM_SPORTS.indexOf(p.category) >= 0; });
+  var citywide = pool.filter(function(p){ return p.citywide && TEAM_SPORTS.indexOf(p.category) >= 0; })
+    .sort(function(a, b){ return (a.division || "").localeCompare(b.division || "") || a.name.localeCompare(b.name); });
+  var names = state.kids.map(function(k){ return k.name; }).join(" and ");
+
+  var picks = soon.slice(0).sort(function(a, b){
+    var da = distTo(a.parkId), db = distTo(b.parkId);
+    if (da == null && db != null) return 1;
+    if (db == null && da != null) return -1;
+    if (da != null && db != null && Math.abs(da - db) > 0.25) return da - db;
+    return daysFromNow(a.dateStart) - daysFromNow(b.dateStart);
+  }).slice(0, 6);
+
+  var counts = {};
+  pool.forEach(function(p){ counts[p.category] = (counts[p.category] || 0) + 1; });
+  var pins = catalog.cats.filter(function(k){ return counts[k]; })
+    .sort(function(a, b){ return counts[b] - counts[a]; })
+    .slice(0, 12)
+    .map(function(k){
+      return '<button class="pin" type="button" data-act="pick-cat" data-cat="' + k + '">' +
+        stamp(k, "stamp-sm") +
+        '<span><b>' + esc(cat(k).name) + '</b><i>' + counts[k] + ' program' + (counts[k] === 1 ? "" : "s") + '</i></span></button>';
+    }).join("");
+
+  var tiles = [
+    {n: open.length, l: "with spots open" + (state.kids.length ? " for " + esc(names) : ""), a:"cell-open", i:"soccer", t:"tangerine"},
+    {n: soon.length, l: "starting in three weeks", a:"cell-soon", i:"track", t:"cobalt"},
+    {n: tight.length, l: "down to three spots or fewer", a:"cell-tight", i:"events", t:"poppy"},
+    {n: free.length, l: "that cost nothing at all", a:"cell-free", i:"preschool", t:"mint"}
+  ].map(function(c){
+    return '<button class="tile" type="button" data-act="' + c.a + '">' +
+      '<span class="stamp wiggle" style="background:var(--' + c.t + ')">' + icon(c.i) + '</span>' +
+      '<b>' + c.n + '</b><span>' + c.l + '</span></button>';
+  }).join("");
+
+  var setup =
+    '<div class="card setup"><div class="card-pad">' +
+      '<span class="label">' + (state.kids.length ? "your household" : "start here") + '</span>' +
+      '<h3>' + (state.kids.length ? esc(names) : "Who are we looking for?") + '</h3>' +
+      (state.kids.length
+        ? '<div class="household" id="household"></div>'
+        : '<p style="font-size:var(--f-sm);color:var(--ink-2)">Pop in a kid&rsquo;s age and every list on this site narrows to what they can actually join.</p>') +
+      '<div class="row" style="margin-top:var(--s1)">' +
+        '<button class="btn btn-yes btn-sm" type="button" data-act="add-kid">' + (state.kids.length ? "Add another" : "Add a kid") + '</button>' +
+        '<button class="btn btn-sm" type="button" data-act="locate">' + (state.home ? "Change location" : "Set your location") + '</button>' +
+      '</div>' +
+      '<p class="fine">' + (state.home ? "Measuring from " + esc(state.home.label) + ". " : "") +
+        'Kids, picks and location stay in this browser. No account, no upload.</p>' +
+    '</div></div>';
+
+  $("#view-home").innerHTML =
+    '<div class="hero">' +
+      '<div>' +
+        '<span class="hand" style="color:var(--tangerine)">for Minneapolis families</span>' +
+        '<h1>Every park program your kid can join, in ' + swoosh("one list") + ' that actually filters.</h1>' +
+        '<p class="hero-lede">The Park Board runs hundreds of them, hidden in a registration system built for staff. Same programs, sorted by age, by sport, by weekday, and by how far you&rsquo;re willing to drive on a Tuesday.</p>' +
+        '<div class="hero-actions">' +
+          '<button class="btn btn-go" type="button" data-nav="find">Browse programs</button>' +
+          '<button class="btn btn-cool" type="button" data-nav="quiz">Take the match quiz</button>' +
+          '<button class="btn" type="button" data-act="locate">' + (state.home ? "Change location" : "Use my location") + '</button>' +
+        '</div>' +
+        '<div class="hero-stats">' +
+          '<div class="hero-stat"><b>' + catalog.programs.length + '</b><span>kids&rsquo; programs</span></div>' +
+          '<div class="hero-stat"><b>' + catalog.parks.filter(function(p){ return p.programCount; }).length + '</b><span>parks &amp; centers</span></div>' +
+          '<div class="hero-stat"><b>' + teams.length + '</b><span>team sports</span></div>' +
+          '<div class="hero-stat"><b>' + free.length + '</b><span>free of charge</span></div>' +
+        '</div>' +
+      '</div>' + setup +
+    '</div>' +
+
+    '<div class="stack">' +
+      '<section>' +
+        '<div class="section-head"><h2>Where things stand today</h2>' +
+          '<span class="hand" style="color:var(--ink-3)">tap a number to filter &rarr;</span></div>' +
+        '<div class="bento">' + tiles + '</div>' +
+      '</section>' +
+
+      '<section>' +
+        '<div class="section-head"><h2>Starting soon' + (state.kids.length ? ' for ' + esc(names) : "") + '</h2>' +
+          '<button class="btn btn-quiet btn-sm" type="button" data-nav="find">See all ' + catalog.programs.length + ' &rarr;</button></div>' +
+        '<div class="list">' + (picks.length ? picks.map(row).join("") :
+          '<p class="empty"><span class="hand">nothing on the calendar yet</span>Nothing starts in the next three weeks at that age. The full list has later sessions.</p>') + '</div>' +
+      '</section>' +
+
+      wavyDivider() +
+
+      '<section>' +
+        '<div class="section-head"><h2>What&rsquo;s out there</h2>' +
+          '<span class="label">' + catalog.cats.length + ' kinds of program</span></div>' +
+        '<div class="pins">' + pins + '</div>' +
+      '</section>' +
+
+      (citywide.length ? '<section>' +
+        '<div class="section-head"><h2>Citywide team leagues</h2>' +
+          '<span class="hand" style="color:var(--grape)">you pick three parks, they build the team</span></div>' +
+        '<div class="list">' + citywide.slice(0, 8).map(row).join("") + '</div>' +
+        (citywide.length > 8 ? '<p class="fine" style="margin-top:var(--s1)">Another ' + (citywide.length - 8) + ' in the full list.</p>' : "") +
+      '</section>' : "") +
+
+      wavyDivider() +
+
+      '<section>' +
+        '<div class="section-head"><h2>How signup actually works</h2></div>' +
+        '<div class="card card-pad">' +
+          '<dl class="facts">' +
+            '<dt>Team sports</dt><dd>Since 2025 you pick a sport, an age division, and <strong>up to three preferred recreation centers</strong>. Staff build the teams after registration closes, weighing your site picks, capacity and friend requests. The <button class="link-inline" type="button" data-nav="map">parks map</button> is built for choosing those three.</dd>' +
+            '<dt>Divisions</dt><dd>6U is 5 and 6 year olds (K and 1st grade). 8U is 7 and 8 (2nd and 3rd). Then 11U, 13U, 15U and 18U carry ages 9 through 18.</dd>' +
+            '<dt>Fees</dt><dd>Youth activity fees are fully discountable at checkout for Minneapolis residents, no code needed. Fee assistance for other programs is separate and also available.</dd>' +
+            '<dt>Friend requests</dt><dd>One friend per kid, mutual, with the same location picked by both. Siblings are placed together automatically unless you say otherwise.</dd>' +
+            '<dt>Three ways in</dt><dd>Online at MPRB Online Recreation Services, in person at any recreation center, or by phone at 612-230-6400 with a card.</dd>' +
+          '</dl>' +
+        '</div>' +
+      '</section>' +
+    '</div>';
+  renderHousehold();
+}
+
+/* =====================================================================
+   Program row and detail
+   ===================================================================== */
+function row(p){
+  var d = distTo(p.parkId);
+  var start = daysFromNow(p.dateStart);
+  var meta = [];
+  if (p.citywide) meta.push('<span>citywide &middot; you pick 3 parks</span>');
+  else if (p.parkLabel) meta.push('<span>' + esc(p.parkLabel) + '</span>');
+  var when = [p.days, p.time].filter(Boolean).join(" &middot; ");
+  if (when) meta.push('<span>' + when + '</span>');
+  if (p.dateRange){
+    meta.push('<span>' + esc(p.dateRange.length > 58 ? p.dateRange.slice(0, 55).replace(/[\s,.]+$/, "") + "…" : p.dateRange) + '</span>');
+  }
+  if (!meta.length) meta.push('<span>schedule on the MPRB listing</span>');
+  return '<button class="item" type="button" data-act="open-program" data-id="' + p.id + '">' +
+    stamp(p.category) +
+    '<span>' +
+      '<span class="item-title">' + esc(p.name) +
+        ' <span class="tag">' + esc(p.division || ageLabel(p)) + '</span>' +
+        (isFree(p) ? ' <span class="tag tag-free">free</span>' : "") +
+        (start != null && start >= 0 && start <= 14 ? ' <span class="tag tag-tight">starts in ' + start + 'd</span>' : "") +
+      '</span>' +
+      '<span class="item-meta">' + meta.join("") + '</span>' +
+    '</span>' +
+    '<span class="item-right"><span class="dist">' + (p.citywide ? "citywide" : fmtDist(d)) + '</span>' + spotsTag(p) + '</span>' +
+  '</button>';
+}
+
+function programModal(p){
+  var pk = park(p.parkId);
+  var start = daysFromNow(p.dateStart);
+  var kidOptions = state.kids.map(function(k){
+    var fits = fitsAge(p, k.age);
+    return '<option value="' + k.id + '"' + (fits ? "" : " disabled") + '>' + esc(k.name) + (fits ? "" : " — outside the age range") + '</option>';
+  }).join("");
+  openModal(
+    '<div class="modal-head">' + stamp(p.category, "stamp-lg") +
+      '<div><h3 id="modal-title">' + esc(p.name) + '</h3>' +
+      '<p class="sub">' + esc([p.citywide ? "citywide league" : p.parkLabel, ageLabel(p), p.number ? "activity " + p.number : ""].filter(Boolean).join(" · ")) + '</p></div>' +
+      '<button class="x" type="button" data-act="close-modal" aria-label="Close">×</button></div>' +
+    '<div class="modal-body">' +
+      (p.blurb ? '<div class="blurb">' + esc(p.blurb) + '</div>' : "") +
+      '<dl class="facts">' +
+        '<dt>When</dt><dd>' + esc([p.days, p.time].filter(Boolean).join(" · ") || "Not published in the listing") +
+          (p.dateRange ? '<br>' + esc(p.dateRange) : "") +
+          (start != null && start >= 0 ? '<br>starts in ' + start + ' day' + (start === 1 ? "" : "s") : "") + '</dd>' +
+        '<dt>Where</dt><dd>' + (p.citywide
+          ? 'Citywide league. ' + esc(p.citywideNote || "MPRB places your kid once registration closes") +
+            '. You name up to three preferred rec centers when you register — ' +
+            '<button class="link-inline" type="button" data-act="close-and-map">rank the closest ones first</button>.'
+          : esc(p.parkLabel || "Not published") +
+            (pk && pk.address ? '<br>' + esc(pk.address) : "") +
+            (distTo(p.parkId) != null ? '<br>' + fmtDist(distTo(p.parkId)) + ' from your location' : "")) + '</dd>' +
+        '<dt>Who</dt><dd>' + esc(p.ages || ageLabel(p)) +
+          (p.division ? ' · ' + esc(p.division) + (/^\d|^grade/.test(p.division) ? "" : " division") : "") + '</dd>' +
+        '<dt>Spots</dt><dd>' + (p.openings == null ? "Not published" :
+          p.openings > 0 ? p.openings + " open" + (p.capacity ? " of " + p.capacity : "") : "Full — ask about the waitlist") + '</dd>' +
+        '<dt>Fee</dt><dd>' + (isFree(p) ? "Free" : esc(p.feeLabel || "On the MPRB page")) +
+          '. Youth fees are fully discountable at checkout for Minneapolis residents.</dd>' +
+      '</dl>' +
+      (state.kids.length
+        ? '<div class="field"><label for="kidsel">Save to my plan for</label><select id="kidsel">' + kidOptions + '</select></div>'
+        : '<p class="fine">Add a kid to save this to your plan.</p>') +
+    '</div>' +
+    '<div class="modal-foot">' +
+      (p.enrollUrl ? '<a class="btn btn-go" href="' + esc(p.enrollUrl) + '" target="_blank" rel="noopener">Register at MPRB</a>' : "") +
+      (p.detailUrl ? '<a class="btn btn-sm" href="' + esc(p.detailUrl) + '" target="_blank" rel="noopener">Full listing</a>' : "") +
+      (state.kids.length ? '<button class="btn btn-yes btn-sm" type="button" data-act="add-to-plan" data-id="' + p.id + '">Save to my plan</button>' : "") +
+      '<button class="btn btn-quiet btn-sm" type="button" data-act="close-modal">Close</button>' +
+    '</div>'
+  );
+}
+
+/* =====================================================================
+   Finder
+   ===================================================================== */
+function matching(){
+  var q = filters.q.trim().toLowerCase();
+  return catalog.programs.filter(function(p){
+    if (filters.cat !== "all" && p.category !== filters.cat) return false;
+    if (filters.parkId && p.parkId !== filters.parkId) return false;
+    if (!fitsAge(p, filters.age)) return false;
+    if (filters.day !== "all" && parseDays(p.days).indexOf(filters.day) < 0) return false;
+    if (filters.openOnly && p.openings != null && p.openings <= 0) return false;
+    if (filters.freeOnly && !isFree(p)) return false;
+    if (filters.soonOnly){
+      var d = daysFromNow(p.dateStart);
+      if (d == null || d < -3 || d > 21) return false;
+    }
+    if (filters.radius < 12 && state.home){
+      var dist = distTo(p.parkId);
+      if (dist != null && dist > filters.radius) return false;
+    }
+    if (q && (p.name + " " + (p.parkLabel || "") + " " + (p.blurb || "")).toLowerCase().indexOf(q) < 0) return false;
+    return true;
+  }).sort(function(a, b){
+    if (filters.sort === "soonest"){
+      var da = daysFromNow(a.dateStart), db = daysFromNow(b.dateStart);
+      if (da == null) return 1;
+      if (db == null) return -1;
+      return da - db;
+    }
+    if (filters.sort === "spots") return (b.openings || 0) - (a.openings || 0);
+    if (filters.sort === "name") return a.name.localeCompare(b.name);
+    var pa = distTo(a.parkId), pb = distTo(b.parkId);
+    if (pa == null && pb == null) return a.name.localeCompare(b.name);
+    if (pa == null) return 1;
+    if (pb == null) return -1;
+    if (Math.abs(pa - pb) > 0.01) return pa - pb;
+    return a.name.localeCompare(b.name);
+  });
+}
+function renderFind(){
+  var results = matching();
+  var shown = results.slice(0, 150);
+  var counts = {};
+  catalog.programs.forEach(function(p){ counts[p.category] = (counts[p.category] || 0) + 1; });
+
+  function chips(sportish){
+    return catalog.cats.filter(function(k){ return !!cat(k).sport === sportish; }).map(function(k){
+      return '<button class="chip" type="button" data-act="filter" data-key="cat" data-value="' + k + '" aria-pressed="' + (filters.cat === k) + '">' +
+        '<span class="stamp stamp-sm" style="background:' + trackColor(k) + '">' + icon(cat(k).icon) + '</span>' +
+        esc(cat(k).name) + ' <span class="num" style="opacity:.6">' + (counts[k] || 0) + '</span></button>';
+    }).join("");
+  }
+  var dayChips = ["all"].concat(DAY_ORDER).map(function(d){
+    return '<button class="chip" type="button" data-act="filter" data-key="day" data-value="' + d + '" aria-pressed="' + (filters.day === d) + '">' +
+      (d === "all" ? "Any day" : d) + '</button>';
+  }).join("");
+  var ageOpts = ['<option value="all">Any age</option>'];
+  for (var a = 2; a <= 18; a++){
+    ageOpts.push('<option value="' + a + '"' + (String(filters.age) === String(a) ? " selected" : "") + '>' + a + ' years old</option>');
+  }
+  var kidChips = state.kids.map(function(k){
+    return '<button class="chip" type="button" data-act="filter-kid" data-id="' + k.id + '" aria-pressed="' + (String(filters.age) === String(k.age)) + '">' +
+      esc(k.name) + ', ' + k.age + '</button>';
+  }).join("");
+
+  $("#view-find").innerHTML =
+    '<div class="finder">' +
+      '<aside class="rail">' +
+        '<div class="fgroup"><label class="label" for="q">Search</label>' +
+          '<input id="q" type="search" placeholder="soccer, ceramics, Powderhorn…" value="' + esc(filters.q) + '" data-act="query"></div>' +
+        '<div class="fgroup"><span class="label">Home base</span>' +
+          '<button class="btn btn-sm" type="button" data-act="locate" style="align-self:flex-start">' + (state.home ? "Change location" : "Set your location") + '</button>' +
+          '<p class="fine">' + (state.home ? esc(state.home.label) : "Not set, so results sort A to Z") + '</p></div>' +
+        '<div class="fgroup"><span class="label">Within ' + (filters.radius >= 12 ? "any distance" : filters.radius + " miles") + '</span>' +
+          '<input type="range" min="1" max="12" step="1" value="' + filters.radius + '" data-act="radius" aria-label="Maximum distance in miles"></div>' +
+        '<div class="fgroup"><span class="label">Age</span>' +
+          '<select data-act="age" aria-label="Age">' + ageOpts.join("") + '</select>' +
+          (kidChips ? '<div class="fchips" style="margin-top:var(--s0)">' + kidChips + '</div>' : "") + '</div>' +
+        '<div class="fgroup"><span class="label">Day of week</span><div class="fchips">' + dayChips + '</div></div>' +
+        '<div class="fgroup"><span class="label">Only show</span>' +
+          '<label class="switch"><input type="checkbox" data-act="openOnly"' + (filters.openOnly ? " checked" : "") + '> With open spots</label>' +
+          '<label class="switch"><input type="checkbox" data-act="soonOnly"' + (filters.soonOnly ? " checked" : "") + '> Starting within 3 weeks</label>' +
+          '<label class="switch"><input type="checkbox" data-act="freeOnly"' + (filters.freeOnly ? " checked" : "") + '> No fee</label></div>' +
+        '<div class="fgroup"><span class="label">Sports</span><div class="fchips">' +
+          '<button class="chip" type="button" data-act="filter" data-key="cat" data-value="all" aria-pressed="' + (filters.cat === "all") + '">Anything</button>' +
+          chips(true) + '</div></div>' +
+        '<div class="fgroup"><span class="label">Everything else</span><div class="fchips">' + chips(false) + '</div></div>' +
+        '<button class="btn btn-quiet btn-sm" type="button" data-act="reset-filters" style="align-self:flex-start">Clear all filters</button>' +
+      '</aside>' +
+      '<div>' +
+        '<div class="result-head">' +
+          '<h2 style="font-size:var(--f-xl)">' + (filters.parkId && park(filters.parkId) ? esc(park(filters.parkId).name) : "Programs") + '</h2>' +
+          '<div class="row">' +
+            '<span class="result-count">' + results.length + ' match' + (results.length === 1 ? "" : "es") +
+              (results.length > shown.length ? ", showing " + shown.length : "") + '</span>' +
+            '<select data-act="sort" aria-label="Sort by" style="width:auto">' +
+              '<option value="distance"' + (filters.sort === "distance" ? " selected" : "") + '>Closest first</option>' +
+              '<option value="soonest"' + (filters.sort === "soonest" ? " selected" : "") + '>Starting soonest</option>' +
+              '<option value="spots"' + (filters.sort === "spots" ? " selected" : "") + '>Most spots left</option>' +
+              '<option value="name"' + (filters.sort === "name" ? " selected" : "") + '>A to Z</option>' +
+            '</select></div>' +
+        '</div>' +
+        (filters.parkId ? '<div class="row" style="margin-bottom:var(--s2)"><button class="btn btn-sm" type="button" data-act="clear-park">Show every location</button></div>' : "") +
+        '<div class="list">' + (shown.length ? shown.map(row).join("") :
+          '<p class="empty"><span class="hand">hmm, nothing here</span>Nothing matches those filters. Widen the distance, clear the category, or switch off a toggle.</p>') + '</div>' +
+        (results.length > shown.length ? '<p class="fine" style="margin-top:var(--s2)">Narrow the filters to reach the other ' + (results.length - shown.length) + '.</p>' : "") +
+      '</div>' +
+    '</div>';
+}
+
+/* =====================================================================
+   Map — a field guide, not a satellite photo
+   ===================================================================== */
+var MAP_W = 620, MAP_H = 720;
+var B = {minLat:44.885, maxLat:45.058, minLng:-93.335, maxLng:-93.185};
+function projX(lng){ return (lng - B.minLng) / (B.maxLng - B.minLng) * MAP_W; }
+function projY(lat){ return (B.maxLat - lat) / (B.maxLat - B.minLat) * MAP_H; }
+function poly(pts){ return pts.map(function(p){ return projX(p[1]).toFixed(1) + "," + projY(p[0]).toFixed(1); }).join(" "); }
+var CITY = [[45.051,-93.329],[45.051,-93.243],[45.030,-93.210],[44.995,-93.196],[44.968,-93.192],[44.940,-93.193],[44.915,-93.196],[44.890,-93.210],[44.890,-93.329]];
+var RIVER = [[45.058,-93.310],[45.030,-93.290],[45.010,-93.272],[44.990,-93.262],[44.975,-93.248],[44.962,-93.232],[44.948,-93.216],[44.930,-93.204],[44.905,-93.198],[44.888,-93.196]];
+var CREEK = [[44.930,-93.318],[44.921,-93.300],[44.914,-93.278],[44.912,-93.250],[44.915,-93.226],[44.916,-93.211]];
+var LAKES = [
+  {cx:-93.322, cy:44.958, rx:.006, ry:.005},
+  {cx:-93.306, cy:44.953, rx:.005, ry:.008},
+  {cx:-93.311, cy:44.940, rx:.006, ry:.007},
+  {cx:-93.306, cy:44.921, rx:.006, ry:.006},
+  {cx:-93.243, cy:44.910, rx:.008, ry:.005},
+  {cx:-93.234, cy:44.921, rx:.004, ry:.003}
+];
+function ranked(){
+  return catalog.parks.filter(function(p){ return p.programCount > 0; })
+    .map(function(p){ return {park:p, d:distTo(p.id)}; })
+    .sort(function(a, b){
+      if (a.d == null && b.d == null) return b.park.programCount - a.park.programCount;
+      if (a.d == null) return 1;
+      if (b.d == null) return -1;
+      return a.d - b.d;
+    });
+}
+function renderMap(){
+  var all = ranked();
+  var mappable = all.filter(function(r){ return r.park.lat != null; });
+  var rank = {};
+  mappable.slice(0, 3).forEach(function(r, i){ rank[r.park.id] = i + 1; });
+
+  var dots = mappable.map(function(r){
+    var p = r.park;
+    var x = +projX(p.lng).toFixed(1), y = +projY(p.lat).toFixed(1);
+    var pref = state.preferred.indexOf(p.id);
+    var isSel = filters.parkId === p.id;
+    var rad = 3.4 + Math.min(4.4, p.programCount / 6);
+    var extra = "";
+    if (pref >= 0){
+      extra = '<path d="M' + x + ' ' + (y - 9) + 'l2.6 5.6 6.2.8-4.5 4.3 1.1 6.1-5.4-2.9-5.4 2.9 1.1-6.1L' + (x - 8.8) + ' ' + (y - 2.6) + 'l6.2-.8z" fill="var(--poppy)" stroke="var(--rule)" stroke-width="1.4"/>';
+    } else if (rank[p.id]){
+      rad = 10;
+      extra = '<text x="' + x + '" y="' + (y + 3.4) + '" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-weight="900" font-size="11" fill="var(--card)">' + rank[p.id] + '</text>';
+    }
+    if (pref >= 0 || isSel || rank[p.id] === 1){
+      extra += '<text x="' + x + '" y="' + (y - (pref >= 0 ? 15 : rad + 9)) + '" text-anchor="middle" font-family="Caveat, cursive" font-size="15" fill="var(--ink)">' + esc(shortName(p.name)) + '</text>';
+    }
+    return '<g class="park-dot" tabindex="0" role="button" data-act="pick-park" data-id="' + p.id + '" aria-label="' + esc(p.name) + ', ' + p.programCount + ' programs">' +
+      '<circle class="hit" cx="' + x + '" cy="' + y + '" r="14" fill="transparent"/>' +
+      (pref >= 0 ? "" : '<circle cx="' + x + '" cy="' + y + '" r="' + rad + '" fill="' + (rank[p.id] ? "var(--tangerine)" : "var(--card)") + '" stroke="var(--rule)" stroke-width="1.6"/>') +
+      extra + '</g>';
+  }).join("");
+
+  var you = state.home
+    ? '<g filter="url(#rough)"><path d="M' + projX(state.home.lng).toFixed(1) + ' ' + (projY(state.home.lat) + 2).toFixed(1) +
+      'c-7-8-5-14 0-14s7 6 0 14z" fill="var(--cobalt)" stroke="var(--rule)" stroke-width="1.6"/>' +
+      '<text x="' + (projX(state.home.lng) + 11).toFixed(1) + '" y="' + (projY(state.home.lat) + 4).toFixed(1) +
+      '" font-family="Caveat, cursive" font-size="17" fill="var(--cobalt)">you</text></g>'
+    : "";
+
+  var slots = [0,1,2].map(function(i){
+    var id = state.preferred[i], p = id ? park(id) : null;
+    return '<div class="slot' + (p ? " on" : "") + '"><span class="n">' + (i + 1) + '</span>' +
+      '<span style="flex:1">' + (p ? esc(p.name) + ' <span class="num" style="color:var(--ink-3);font-size:var(--f-xs)">' + fmtDist(distTo(p.id)) + '</span>' : "not picked yet") + '</span>' +
+      (p ? '<button class="btn btn-quiet btn-sm" type="button" data-act="unprefer" data-id="' + p.id + '">Remove</button>' : "") + '</div>';
+  }).join("");
+
+  var rows = all.slice(0, 18).map(function(r, i){
+    var on = state.preferred.indexOf(r.park.id) >= 0;
+    return '<div class="near"><span class="rank">' + String(i + 1).padStart(2, "0") + '</span>' +
+      '<span><b>' + esc(r.park.name) + '</b><i>' + (r.park.address ? esc(r.park.address) + " · " : "") + r.park.programCount + ' programs</i></span>' +
+      '<span class="dist">' + fmtDist(r.d) + '</span>' +
+      '<span class="row" style="gap:6px">' +
+        '<button class="btn btn-quiet btn-sm" type="button" data-act="pick-park" data-id="' + r.park.id + '">Programs</button>' +
+        '<button class="btn ' + (on ? "" : "btn-yes") + ' btn-sm" type="button" data-act="' + (on ? "unprefer" : "prefer") + '" data-id="' + r.park.id + '">' + (on ? "Picked" : "Prefer") + '</button>' +
+      '</span></div>';
+  }).join("");
+
+  $("#view-map").innerHTML =
+    '<div class="section-head">' +
+      '<div><span class="hand" style="color:var(--tangerine)">the three-park decision</span>' +
+      '<h2 style="margin-top:var(--s0)">Pick your preferred rec centers</h2>' +
+      '<p style="color:var(--ink-2);font-size:var(--f-sm);max-width:62ch;margin-top:var(--s1)">Team sport signup asks for three preferred sites and places your kid at the first one with room. The real form hands you a dropdown of every park in the city. Here you can see which are actually close.</p></div>' +
+      '<button class="btn btn-cool btn-sm" type="button" data-act="locate">' + (state.home ? "Change location" : "Use my location") + '</button>' +
+    '</div>' +
+    '<div class="maplayout">' +
+      '<div class="mapcard">' +
+        '<svg class="map" viewBox="0 0 ' + MAP_W + ' ' + MAP_H + '" role="img" aria-label="Hand-drawn map of Minneapolis park program locations">' +
+          '<defs><clipPath id="cityclip"><polygon points="' + poly(CITY) + '"/></clipPath></defs>' +
+          '<g filter="url(#rougher)">' +
+            '<polygon points="' + poly(CITY) + '" fill="var(--paper-2)" stroke="var(--rule)" stroke-width="2.5"/>' +
+          '</g>' +
+          '<g filter="url(#rough)" style="color:var(--cobalt)" clip-path="url(#cityclip)">' +
+            '<polyline points="' + poly(RIVER) + '" fill="none" stroke="var(--cobalt)" stroke-opacity=".55" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+            LAKES.map(function(l){
+              var rx = (l.rx / (B.maxLng - B.minLng) * MAP_W).toFixed(1);
+              var ry = (l.ry / (B.maxLat - B.minLat) * MAP_H).toFixed(1);
+              return '<ellipse cx="' + projX(l.cx).toFixed(1) + '" cy="' + projY(l.cy).toFixed(1) + '" rx="' + rx + '" ry="' + ry +
+                '" fill="url(#hatch)" stroke="var(--cobalt)" stroke-width="2"/>';
+            }).join("") +
+            '<polyline points="' + poly(CREEK) + '" fill="none" stroke="var(--mint)" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 7"/>' +
+          '</g>' +
+          '<g transform="translate(556 44)" filter="url(#rough)">' +
+            '<circle r="16" fill="var(--card)" stroke="var(--rule)" stroke-width="2"/>' +
+            '<path d="M0 -10l3.5 8.5L0 10l-3.5-11.5z" fill="var(--tangerine)" stroke="var(--rule)" stroke-width="1.2"/>' +
+            '<text x="0" y="-19" text-anchor="middle" font-family="Caveat, cursive" font-size="16" fill="var(--ink)">N</text>' +
+          '</g>' +
+          '<text x="26" y="' + (MAP_H - 34) + '" font-family="Caveat, cursive" font-size="17" fill="var(--ink-3)" stroke="var(--paper-2)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">not to scale &mdash; but the distances are real</text>' +
+          dots + you +
+        '</svg>' +
+        '<div class="maplegend">' +
+          '<span><i style="background:var(--tangerine)"></i>1&ndash;3 closest to you</span>' +
+          '<span><i style="background:var(--poppy);border-radius:50%"></i>your picks</span>' +
+          '<span><i style="background:var(--card)"></i>other parks, sized by how much they run</span>' +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:var(--s3)">' +
+        '<div class="card card-pad" style="display:flex;flex-direction:column;gap:var(--s2)">' +
+          '<span class="label">your three, in order</span>' +
+          '<div class="slots">' + slots + '</div>' +
+          '<div class="row">' +
+            '<button class="btn btn-sm" type="button" data-act="copy-preferred">Copy for the MPRB form</button>' +
+            (state.preferred.length ? '<button class="btn btn-quiet btn-sm" type="button" data-act="clear-preferred">Clear</button>' : "") +
+          '</div>' +
+        '</div>' +
+        '<div class="card" style="overflow:hidden">' +
+          '<div style="padding:var(--s3);border-bottom:2px solid var(--rule)"><span class="label">closest first</span></div>' +
+          '<div class="near-scroll">' + (rows || '<p class="empty">No locations to rank yet.</p>') + '</div>' +
+        '</div>' +
+        '<p class="fine">Coordinates come from each location name and are used only to rank distance, in your browser. Nothing about where you live leaves this page.' +
+          (all.length - mappable.length > 0 ? ' ' + (all.length - mappable.length) + ' location' + (all.length - mappable.length === 1 ? "" : "s") + ' could not be placed on the map and sit at the end of the list.' : "") + '</p>' +
+      '</div>' +
+    '</div>';
+}
+
+/* =====================================================================
+   Quiz
+   ===================================================================== */
+var QUIZ = [
+  {q:"How old is the kid you're signing up?", help:"MPRB groups by age, so this decides which divisions and sessions show up.",
+   opts:[
+     {label:"3 or 4", sub:"Preschool programs", age:4, i:"preschool", c:"sunny"},
+     {label:"5 or 6", sub:"6U division, everything is a first time", age:6, i:"soccer", c:"tangerine"},
+     {label:"7 or 8", sub:"8U division", age:8, i:"basketball", c:"poppy"},
+     {label:"9 to 11", sub:"11U division", age:10, i:"football", c:"mint"},
+     {label:"12 to 14", sub:"13U or 15U", age:13, i:"volleyball", c:"cobalt"},
+     {label:"15 to 17", sub:"15U or 18U", age:16, i:"teen", c:"grape"}
+   ]},
+  {q:"What happens when they get a free hour?",
+   opts:[
+     {label:"Laps around the house", sub:"The motor never stops", tags:{soccer:3, track:3, basketball:2, multisport:2}, i:"track"},
+     {label:"Building something, precisely", sub:"Focused, likes mastering a thing", tags:{gymnastics:3, skating:3, arts:3, archery:2, golf:2}, i:"arts"},
+     {label:"Rounding up every kid nearby", sub:"It's about the group", tags:{basketball:3, football:3, volleyball:3, soccer:2, multisport:2}, i:"volleyball"},
+     {label:"Wrestling the dog", sub:"Physical, loves contact", tags:{wrestling:3, hockey:3, football:2, martialarts:3}, i:"wrestling"}
+   ]},
+  {q:"Big team, or their own lane?",
+   opts:[
+     {label:"Big team energy", sub:"Jerseys, sidelines, a schedule", tags:{soccer:3, basketball:3, football:2, volleyball:2, hockey:2, baseball:2}, i:"soccer"},
+     {label:"Small group or solo", sub:"Progress they can see themselves", tags:{gymnastics:3, swim:3, tennis:3, archery:2, martialarts:2, dance:2, arts:2}, i:"gymnastics"},
+     {label:"Either is fine", sub:"They adapt", tags:{multisport:3, soccer:1, basketball:1, fitness:1, camps:1}, i:"multisport"}
+   ]},
+  {q:"How do they feel about a Minnesota winter?",
+   opts:[
+     {label:"Outside till their eyelashes freeze", sub:"Rink kid", tags:{hockey:4, skating:3, outdoors:3}, i:"hockey"},
+     {label:"Inside, please", sub:"Gym over snowbank", tags:{basketball:3, volleyball:3, gymnastics:3, wrestling:2, swim:2, arts:2}, i:"fitness"},
+     {label:"We're a spring and summer family", sub:"Wait for the thaw", tags:{baseball:3, softball:3, tennis:3, soccer:2, track:2, golf:2}, i:"baseball"}
+   ]},
+  {q:"How many evenings a week can you actually drive?", help:"Be honest. This is the reason most families quit mid-season.",
+   opts:[
+     {label:"One, and that's pushing it", sub:"Keep it simple", tags:{gymnastics:2, skating:2, swim:2, arts:2, fitness:3, schoolout:2}, days:1, i:"schoolout"},
+     {label:"Two is fine", sub:"A practice and a weekend game", tags:{soccer:2, basketball:2, football:2, baseball:2, volleyball:2}, days:2, i:"basketball"},
+     {label:"We live at the park", sub:"Bring on the schedule", tags:{hockey:2, wrestling:2, track:2, multisport:2, swim:1}, days:3, i:"outdoors"}
+   ]},
+  {q:"What would make this season a win?",
+   opts:[
+     {label:"Trying something brand new", sub:"Never touched it before", tags:{archery:3, skating:3, martialarts:2, arts:3, cooking:2, multisport:2}, i:"archery"},
+     {label:"Getting better at their sport", sub:"They already have a favourite", tags:{basketball:2, soccer:2, hockey:2, gymnastics:2, swim:2}, i:"soccer"},
+     {label:"Being with their friends", sub:"Social first, sport second", tags:{football:3, basketball:2, soccer:2, volleyball:2, fitness:2, teen:2}, i:"teen"},
+     {label:"Burning off some energy", sub:"Everyone sleeps better", tags:{soccer:3, track:2, basketball:2, swim:2, fitness:2, multisport:2}, i:"multisport"}
+   ]}
+];
+function renderQuiz(){
+  var el = $("#view-quiz");
+  if (quizStep >= QUIZ.length){ renderQuizResult(el); return; }
+  var q = QUIZ[quizStep];
+  el.innerHTML =
+    '<div class="quiz">' +
+      '<span class="label">question ' + (quizStep + 1) + ' of ' + QUIZ.length + '</span>' +
+      '<div class="track"><i style="width:' + Math.round((quizStep + 1) / QUIZ.length * 100) + '%"></i></div>' +
+      '<h2 class="qtitle">' + esc(q.q) + '</h2>' +
+      (q.help ? '<p class="qhelp">' + esc(q.help) + '</p>' : "") +
+      '<div class="opts">' + q.opts.map(function(o, i){
+        var track = o.c ? "var(--" + o.c + ")" : (o.i && CATS[o.i] ? trackColor(o.i) : "var(--sunny)");
+        return '<button class="opt" type="button" data-act="quiz-answer" data-i="' + i + '">' +
+          '<span class="key">' + String.fromCharCode(65 + i) + '</span>' +
+          '<span class="stamp wiggle" style="background:' + track + '">' + icon(o.i || "other") + '</span>' +
+          '<span><b>' + esc(o.label) + '</b><span>' + esc(o.sub || "") + '</span></span></button>';
+      }).join("") + '</div>' +
+      '<div class="row" style="margin-top:var(--s4)">' +
+        (quizStep > 0 ? '<button class="btn btn-sm" type="button" data-act="quiz-back">Back</button>' : "") +
+        '<button class="btn btn-quiet btn-sm" type="button" data-act="quiz-reset">Start over</button>' +
+      '</div>' +
+    '</div>';
+}
+function scoreQuiz(){
+  var scores = {}, age = null, days = 3;
+  quizAnswers.forEach(function(idx, qi){
+    var o = QUIZ[qi] && QUIZ[qi].opts[idx];
+    if (!o) return;
+    if (o.age != null) age = o.age;
+    if (o.days != null) days = o.days;
+    Object.keys(o.tags || {}).forEach(function(k){ scores[k] = (scores[k] || 0) + o.tags[k]; });
+  });
+  var available = {};
+  catalog.programs.forEach(function(p){
+    if (age != null && !fitsAge(p, age)) return;
+    if (p.openings != null && p.openings <= 0) return;
+    available[p.category] = (available[p.category] || 0) + 1;
+  });
+  var top = Object.keys(scores).filter(function(k){ return available[k]; })
+    .sort(function(a, b){ return scores[b] - scores[a]; });
+  return {scores:scores, top:top, age:age, days:days, available:available};
+}
+function renderQuizResult(el){
+  var res = scoreQuiz();
+  if (!res.top.length){
+    el.innerHTML = '<div class="quiz"><span class="hand" style="color:var(--poppy);font-size:22px">no match, oddly</span>' +
+      '<h2 class="qtitle">Nothing open that fits</h2>' +
+      '<p class="qhelp">Nothing with spots lines up with those answers at that age today. The full list has later sessions.</p>' +
+      '<button class="btn btn-go" type="button" data-nav="find">Browse everything</button></div>';
+    return;
+  }
+  var max = res.scores[res.top[0]] || 1;
+  var blocks = res.top.slice(0, 3).map(function(key, i){
+    var pct = Math.round((res.scores[key] || 0) / max * 100);
+    var picks = catalog.programs.filter(function(p){
+      return p.category === key && fitsAge(p, res.age) && (p.openings == null || p.openings > 0);
+    }).sort(function(a, b){
+      var da = distTo(a.parkId), db = distTo(b.parkId);
+      if (da == null && db == null) return 0;
+      if (da == null) return 1;
+      if (db == null) return -1;
+      return da - db;
+    }).slice(0, 3);
+    return '<div class="card card-pad" style="display:flex;flex-direction:column;gap:var(--s3)">' +
+      '<div class="row" style="justify-content:space-between">' +
+        '<div class="row">' + stamp(key) + '<div><b style="font-size:var(--f-md);font-weight:800">' + esc(cat(key).name) + '</b>' +
+        '<div class="label">match ' + (i + 1) + ' &middot; ' + res.available[key] + ' open at this age</div></div></div>' +
+        '<div class="meter" aria-hidden="true"><i style="width:' + pct + '%"></i></div></div>' +
+      (picks.length ? '<div class="list">' + picks.map(row).join("") + '</div>'
+                    : '<p class="fine">Nothing with spots right now.</p>') + '</div>';
+  }).join("");
+  el.innerHTML =
+    '<div class="quiz">' +
+      '<span class="label">result</span>' +
+      '<div class="track"><i style="width:100%"></i></div>' +
+      '<div class="verdict">' + stamp(res.top[0], "stamp-lg") +
+        '<div><span class="hand">start here &rarr;</span><h3>' + esc(cat(res.top[0]).name) + '</h3>' +
+        '<p style="font-size:var(--f-sm)">Scored against what the Park Board actually has open for a ' +
+        (res.age || "kid of any") + '-year-old, with ' + res.days + (res.days === 1 ? " evening" : " evenings") + ' a week of driving.</p></div>' +
+      '</div>' +
+      '<div class="stack" style="gap:var(--s4)">' + blocks + '</div>' +
+      '<div class="row" style="margin-top:var(--s4)">' +
+        '<button class="btn btn-go btn-sm" type="button" data-act="quiz-to-find" data-cat="' + res.top[0] + '" data-age="' + (res.age || "all") + '">See all ' + esc(cat(res.top[0]).name.toLowerCase()) + '</button>' +
+        '<button class="btn btn-quiet btn-sm" type="button" data-act="quiz-reset">Retake</button>' +
+      '</div>' +
+    '</div>';
+}
+
+/* =====================================================================
+   Plan
+   ===================================================================== */
+function planEntries(){
+  return state.plan.map(function(e){ return {kid:kidById(e.kidId), program:programById(e.programId)}; })
+    .filter(function(e){ return e.kid && e.program; });
+}
+function renderPlan(){
+  var entries = planEntries();
+  var el = $("#view-plan");
+  if (!entries.length){
+    el.innerHTML =
+      '<div class="section-head"><h2>My plan</h2></div>' +
+      '<div class="card card-pad" style="text-align:center;padding:var(--s7) var(--s4)">' +
+        '<span class="hand" style="color:var(--tangerine);font-size:22px">nothing pinned yet</span>' +
+        '<p style="color:var(--ink-2);margin:var(--s2) 0 var(--s4)">Save a program and this turns into a week view of who&rsquo;s where, with every registration link in one place.</p>' +
+        '<button class="btn btn-go" type="button" data-nav="find">Browse programs</button></div>';
+    return;
+  }
+  var byDay = {}, undated = [];
+  DAY_ORDER.forEach(function(d){ byDay[d] = []; });
+  entries.forEach(function(e){
+    var days = parseDays(e.program.days);
+    if (!days.length){ undated.push(e); return; }
+    days.forEach(function(d){ byDay[d].push({kid:e.kid, program:e.program, mins:timeMinutes(e.program.time)}); });
+  });
+  var clashes = 0;
+  DAY_ORDER.forEach(function(d){
+    byDay[d].sort(function(a, b){ return (a.mins || 0) - (b.mins || 0); });
+    byDay[d].forEach(function(a){
+      byDay[d].forEach(function(b){
+        if (a === b || a.mins == null || b.mins == null) return;
+        if (Math.abs(a.mins - b.mins) < 75 && a.program.parkId !== b.program.parkId) a.clash = true;
+      });
+    });
+    clashes += byDay[d].filter(function(x){ return x.clash; }).length;
+  });
+  var week = DAY_ORDER.map(function(d){
+    return '<div class="day"><span class="label">' + d + '</span>' +
+      (byDay[d].length ? byDay[d].map(function(x){
+        return '<div class="sess" style="border-left-color:' + (x.clash ? "var(--poppy)" : lineColor(x.program.category)) + '">' +
+          '<b>' + esc(x.kid.name) + '</b><i>' + esc(x.program.time || "time TBD") + '</i>' +
+          '<i>' + esc(shortName(x.program.parkLabel) || "citywide") + '</i></div>';
+      }).join("") : '<span class="fine">free</span>') + '</div>';
+  }).join("");
+  var rows = entries.map(function(e){
+    var p = e.program;
+    return '<div class="item">' + stamp(p.category) +
+      '<span><span class="item-title">' + esc(p.name) + ' <span class="tag">' + esc(e.kid.name) + '</span></span>' +
+      '<span class="item-meta"><span>' + esc(p.parkLabel || "citywide") + '</span><span>' + esc([p.days, p.time].filter(Boolean).join(" · ")) + '</span></span></span>' +
+      '<span class="item-right acts">' +
+        (p.enrollUrl ? '<a class="btn btn-go btn-sm" href="' + esc(p.enrollUrl) + '" target="_blank" rel="noopener">Register</a>' : "") +
+        '<button class="btn btn-quiet btn-sm" type="button" data-act="remove-plan" data-id="' + p.id + '" data-kid="' + e.kid.id + '">Remove</button>' +
+      '</span></div>';
+  }).join("");
+  var fees = entries.map(function(e){
+    return '<div class="money"><span>' + esc(e.kid.name) + ' &middot; ' + esc(e.program.name) + '</span>' +
+      '<span class="num">' + esc(isFree(e.program) ? "free" : (e.program.feeLabel || "see listing")) + '</span></div>';
+  }).join("");
+
+  el.innerHTML =
+    '<div class="section-head">' +
+      '<div><h2>My plan</h2><p style="color:var(--ink-2);font-size:var(--f-sm);margin-top:var(--s0)">' +
+        entries.length + ' program' + (entries.length === 1 ? "" : "s") +
+        (clashes ? ' &middot; <strong style="color:var(--poppy)">' + clashes + ' overlap' + (clashes === 1 ? "" : "s") + '</strong>' : ' &middot; no clashes') + '</p></div>' +
+      '<div class="row">' +
+        '<button class="btn btn-sm" type="button" data-act="export-ics">Add to calendar</button>' +
+        '<button class="btn btn-sm" type="button" data-act="copy-plan">Copy as text</button>' +
+      '</div></div>' +
+    '<div class="stack" style="gap:var(--s5)">' +
+      '<section><div class="section-head"><h2 style="font-size:var(--f-lg)">A normal week</h2>' +
+        (clashes ? '<span class="hand" style="color:var(--poppy)">red means two places at once</span>' : "") + '</div>' +
+        '<div class="week">' + week + '</div>' +
+        (undated.length ? '<p class="fine" style="margin-top:var(--s1)">' + undated.length + ' saved program' +
+          (undated.length === 1 ? " doesn't" : "s don't") + ' publish a weekday yet, which is normal for league signups before teams are built.</p>' : "") +
+      '</section>' +
+      '<section><div class="section-head"><h2 style="font-size:var(--f-lg)">Saved</h2></div>' +
+        '<div class="list">' + rows + '</div></section>' +
+      '<section><div class="section-head"><h2 style="font-size:var(--f-lg)">Fees</h2></div>' +
+        '<div class="card card-pad">' + fees +
+          '<p class="fine" style="margin-top:var(--s2)">MPRB publishes exact amounts on each activity page, which is why some of these say &ldquo;view fee details&rdquo;. Youth fees are fully discountable at checkout for Minneapolis residents.</p>' +
+        '</div></section>' +
+    '</div>';
+}
+
+/* =====================================================================
+   Modals
+   ===================================================================== */
+function openModal(html){
+  var scrim = $("#scrim");
+  scrim.innerHTML = '<div class="modal">' + html + '</div>';
+  scrim.hidden = false;
+  scrim.classList.add("open");
+  document.body.style.overflow = "hidden";
+  var f = scrim.querySelector("input, select, button, a");
+  if (f) f.focus();
+}
+function closeModal(){
+  var scrim = $("#scrim");
+  scrim.classList.remove("open");
+  scrim.hidden = true;
+  scrim.innerHTML = "";
+  document.body.style.overflow = "";
+}
+$("#scrim").addEventListener("click", function(ev){ if (ev.target === this) closeModal(); });
+document.addEventListener("keydown", function(ev){ if (ev.key === "Escape") closeModal(); });
+
+function addKidModal(){
+  var opts = [];
+  for (var a = 2; a <= 18; a++) opts.push('<option value="' + a + '"' + (a === 8 ? " selected" : "") + '>' + a + ' years old</option>');
+  openModal(
+    '<div class="modal-head"><span class="stamp stamp-lg" style="background:var(--mint)">' + icon("preschool") + '</span>' +
+      '<div><h3 id="modal-title">Add a kid</h3><p class="sub">A first name and an age. That&rsquo;s the whole form.</p></div>' +
+      '<button class="x" type="button" data-act="close-modal" aria-label="Close">×</button></div>' +
+    '<div class="modal-body">' +
+      '<div class="field"><label for="kidname">First name</label><input id="kidname" type="text" placeholder="Nora" autocomplete="off"></div>' +
+      '<div class="field"><label for="kidage">Age</label><select id="kidage">' + opts.join("") + '</select></div>' +
+    '</div>' +
+    '<div class="modal-foot"><button class="btn btn-yes" type="button" data-act="do-add-kid">Add</button>' +
+      '<button class="btn btn-quiet btn-sm" type="button" data-act="close-modal">Cancel</button></div>'
+  );
+}
+function householdModal(){
+  openModal(
+    '<div class="modal-head"><div><h3 id="modal-title">Your household</h3>' +
+      '<p class="sub">Stored in this browser, never uploaded.</p></div>' +
+      '<button class="x" type="button" data-act="close-modal" aria-label="Close">×</button></div>' +
+    '<div class="modal-body"><div class="household" id="household"></div>' +
+      '<button class="btn btn-yes btn-sm" type="button" data-act="add-kid" style="align-self:flex-start">Add a kid</button></div>' +
+    '<div class="modal-foot"><button class="btn btn-sun" type="button" data-act="close-modal">Done</button></div>'
+  );
+  renderHousehold();
+}
+var HOODS = [
+  {label:"Powderhorn", lat:44.9370, lng:-93.2530},
+  {label:"Northeast", lat:45.0000, lng:-93.2470},
+  {label:"North Minneapolis", lat:45.0100, lng:-93.2990},
+  {label:"Downtown", lat:44.9760, lng:-93.2700},
+  {label:"Uptown / Lowry Hill", lat:44.9490, lng:-93.2980},
+  {label:"Southwest / Linden Hills", lat:44.9230, lng:-93.3140},
+  {label:"Nokomis", lat:44.9130, lng:-93.2400},
+  {label:"Longfellow / Seward", lat:44.9450, lng:-93.2250},
+  {label:"University / Prospect Park", lat:44.9720, lng:-93.2260},
+  {label:"Camden", lat:45.0330, lng:-93.2960}
+];
+function locationModal(){
+  openModal(
+    '<div class="modal-head"><span class="stamp stamp-lg" style="background:var(--cobalt)">' + icon("outdoors") + '</span>' +
+      '<div><h3 id="modal-title">Where are you starting from?</h3>' +
+      '<p class="sub">Used only to sort parks by distance, in this browser.</p></div>' +
+      '<button class="x" type="button" data-act="close-modal" aria-label="Close">×</button></div>' +
+    '<div class="modal-body">' +
+      '<button class="btn btn-cool" type="button" data-act="use-gps" style="align-self:flex-start">Use my current location</button>' +
+      '<div class="field"><label for="areasel">Or pick a neighbourhood</label><select id="areasel">' +
+        HOODS.map(function(a, i){ return '<option value="' + i + '">' + esc(a.label) + '</option>'; }).join("") + '</select></div>' +
+      '<p class="fine">Your browser will ask before sharing GPS. This page has no server of its own, so coordinates never leave the device.</p>' +
+    '</div>' +
+    '<div class="modal-foot"><button class="btn btn-sun" type="button" data-act="use-area">Use this neighbourhood</button>' +
+      '<button class="btn btn-quiet btn-sm" type="button" data-act="close-modal">Cancel</button></div>'
+  );
+}
+
+/* =====================================================================
+   Actions
+   ===================================================================== */
+function handleAction(act, data){
+  switch (act){
+    case "add-kid": addKidModal(); break;
+    case "do-add-kid": {
+      var name = ($("#kidname").value || "").trim();
+      if (!name){ toast("A first name is enough."); $("#kidname").focus(); return; }
+      state.kids.push({id:"k" + Date.now(), name:name, age:parseInt($("#kidage").value, 10)});
+      save(); closeModal(); render();
+      toast(name + " is in.");
+      break;
+    }
+    case "household": householdModal(); break;
+    case "remove-kid":
+      state.kids = state.kids.filter(function(k){ return k.id !== data.id; });
+      state.plan = state.plan.filter(function(e){ return e.kidId !== data.id; });
+      save(); render(); renderHousehold();
+      break;
+    case "open-program": { var p = programById(data.id); if (p) programModal(p); break; }
+    case "close-modal": closeModal(); break;
+    case "close-and-map": closeModal(); go("map"); break;
+    case "add-to-plan": {
+      var sel = $("#kidsel");
+      if (!sel) return;
+      if (inPlan(data.id, sel.value)){ toast("Already in your plan."); return; }
+      state.plan.push({kidId:sel.value, programId:data.id});
+      save(); closeModal(); render();
+      toast("Pinned to your plan.");
+      break;
+    }
+    case "remove-plan":
+      state.plan = state.plan.filter(function(e){ return !(String(e.programId) === String(data.id) && e.kidId === data.kid); });
+      save(); render();
+      break;
+    case "filter": filters[data.key] = (filters[data.key] === data.value) ? "all" : data.value; renderFind(); break;
+    case "filter-kid": {
+      var k = kidById(data.id);
+      if (k) filters.age = String(filters.age) === String(k.age) ? "all" : String(k.age);
+      renderFind();
+      break;
+    }
+    case "pick-cat": filters = Object.assign({}, DEFAULTS, {cat:data.cat}); go("find"); break;
+    case "reset-filters": filters = Object.assign({}, DEFAULTS); renderFind(); break;
+    case "cell-open": filters = Object.assign({}, DEFAULTS, {openOnly:true}); go("find"); break;
+    case "cell-soon": filters = Object.assign({}, DEFAULTS, {soonOnly:true, sort:"soonest"}); go("find"); break;
+    case "cell-tight": filters = Object.assign({}, DEFAULTS, {openOnly:true, sort:"spots"}); go("find"); toast("Sorted by spots — the nearly full ones are at the bottom."); break;
+    case "cell-free": filters = Object.assign({}, DEFAULTS, {freeOnly:true}); go("find"); break;
+    case "pick-park": filters = Object.assign({}, DEFAULTS, {parkId:data.id, radius:12}); go("find"); break;
+    case "clear-park": filters.parkId = null; renderFind(); break;
+    case "prefer":
+      if (state.preferred.indexOf(data.id) >= 0) return;
+      if (state.preferred.length >= 3){ toast("Three is the limit MPRB allows. Drop one first."); return; }
+      state.preferred.push(data.id); save(); renderMap();
+      break;
+    case "unprefer":
+      state.preferred = state.preferred.filter(function(id){ return id !== data.id; });
+      save(); renderMap();
+      break;
+    case "clear-preferred": state.preferred = []; save(); renderMap(); break;
+    case "copy-preferred": {
+      if (!state.preferred.length){ toast("Pick at least one park first."); return; }
+      copy(state.preferred.map(function(id, i){
+        var pk = park(id);
+        return (i + 1) + ". " + pk.name + (pk.address ? " (" + pk.address + ")" : "");
+      }).join("\n"), "Copied, in order.");
+      break;
+    }
+    case "locate": locationModal(); break;
+    case "use-gps":
+      if (!navigator.geolocation){ toast("This browser will not share a location."); return; }
+      toast("Asking your browser…");
+      navigator.geolocation.getCurrentPosition(function(pos){
+        state.home = {label:"your current location", lat:pos.coords.latitude, lng:pos.coords.longitude};
+        save(); closeModal(); render();
+        toast("Sorted by distance from you.");
+      }, function(){ toast("Location was blocked. Pick a neighbourhood instead."); }, {timeout:8000});
+      break;
+    case "use-area": {
+      var a = HOODS[parseInt($("#areasel").value, 10)];
+      state.home = {label:a.label, lat:a.lat, lng:a.lng};
+      save(); closeModal(); render();
+      toast("Starting from " + a.label + ".");
+      break;
+    }
+    case "quiz-answer": quizAnswers[quizStep] = parseInt(data.i, 10); quizStep++; renderQuiz(); break;
+    case "quiz-back": quizStep = Math.max(0, quizStep - 1); renderQuiz(); break;
+    case "quiz-reset": quizStep = 0; quizAnswers = []; renderQuiz(); break;
+    case "quiz-to-find": filters = Object.assign({}, DEFAULTS, {cat:data.cat, age:data.age === "all" ? "all" : data.age}); go("find"); break;
+    case "copy-plan":
+      copy(planEntries().map(function(e){
+        var p = e.program;
+        return e.kid.name + " — " + p.name + " at " + (p.parkLabel || "a citywide league") +
+          ([p.days, p.time].filter(Boolean).length ? " (" + [p.days, p.time].filter(Boolean).join(" ") + ")" : "") +
+          (p.dateRange ? ", " + p.dateRange : "") +
+          (p.enrollUrl ? "\n  register: " + p.enrollUrl : "");
+      }).join("\n"), "Plan copied.");
+      break;
+    case "export-ics": exportIcs(); break;
+    default: break;
+  }
+}
+function copy(text, ok){
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ toast(ok); }, function(){ toast("Could not copy here."); });
+  } else {
+    toast("Clipboard is not available in this browser.");
+  }
+}
+document.addEventListener("input", function(ev){
+  var act = ev.target.dataset ? ev.target.dataset.act : null;
+  if (act === "radius"){ filters.radius = parseInt(ev.target.value, 10); renderFind(); }
+  else if (act === "query"){
+    filters.q = ev.target.value;
+    clearTimeout(window._qt);
+    window._qt = setTimeout(function(){
+      renderFind();
+      var box = $("#q");
+      if (box){ box.focus(); box.setSelectionRange(box.value.length, box.value.length); }
+    }, 250);
+  }
+});
+document.addEventListener("change", function(ev){
+  var act = ev.target.dataset ? ev.target.dataset.act : null;
+  if (act === "age"){ filters.age = ev.target.value; renderFind(); }
+  else if (act === "sort"){ filters.sort = ev.target.value; renderFind(); }
+  else if (act === "openOnly"){ filters.openOnly = ev.target.checked; renderFind(); }
+  else if (act === "freeOnly"){ filters.freeOnly = ev.target.checked; renderFind(); }
+  else if (act === "soonOnly"){ filters.soonOnly = ev.target.checked; renderFind(); }
+});
+document.addEventListener("keydown", function(ev){
+  if (ev.key !== "Enter" && ev.key !== " ") return;
+  var dot = ev.target.closest ? ev.target.closest(".park-dot") : null;
+  if (dot){ ev.preventDefault(); handleAction("pick-park", dot.dataset); }
+});
+
+/* ---------- calendar ---------- */
+function pad(n){ return String(n).padStart(2, "0"); }
+function icsDay(d){ return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()); }
+function exportIcs(){
+  var entries = planEntries();
+  if (!entries.length){ toast("Nothing in your plan yet."); return; }
+  var lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//ParkPlay//Minneapolis//EN", "CALSCALE:GREGORIAN"];
+  var made = 0;
+  entries.forEach(function(e, i){
+    var p = e.program;
+    var days = parseDays(p.days);
+    var mins = timeMinutes(p.time);
+    var start = p.dateStart ? new Date(p.dateStart + "T00:00:00") : new Date();
+    if (isNaN(start)) start = new Date();
+    var end = p.dateEnd ? new Date(p.dateEnd + "T00:00:00") : null;
+    var weeks = end && !isNaN(end) ? Math.max(1, Math.round((end - start) / (7 * 86400000)) + 1) : 1;
+    if (!days.length) days = [DAY_ORDER[(start.getDay() + 6) % 7]];
+    days.forEach(function(day, j){
+      var first = new Date(start);
+      while (first.getDay() !== DAY_INDEX[day]) first.setDate(first.getDate() + 1);
+      lines.push("BEGIN:VEVENT");
+      lines.push("UID:parkplay-" + p.id + "-" + i + "-" + j + "@parkplay");
+      if (mins == null){
+        var nextDay = new Date(first); nextDay.setDate(nextDay.getDate() + 1);
+        lines.push("DTSTART;VALUE=DATE:" + icsDay(first));
+        lines.push("DTEND;VALUE=DATE:" + icsDay(nextDay));
+      } else {
+        lines.push("DTSTART:" + icsDay(first) + "T" + pad(Math.floor(mins / 60)) + pad(mins % 60) + "00");
+        lines.push("DTEND:" + icsDay(first) + "T" + pad(Math.floor((mins + 60) / 60)) + pad((mins + 60) % 60) + "00");
+      }
+      if (weeks > 1) lines.push("RRULE:FREQ=WEEKLY;COUNT=" + weeks);
+      lines.push("SUMMARY:" + e.kid.name + " · " + p.name);
+      lines.push("LOCATION:" + (p.parkLabel || "Minneapolis") + ", Minneapolis MN");
+      lines.push("DESCRIPTION:" + (p.enrollUrl || p.detailUrl || "MPRB program"));
+      lines.push("END:VEVENT");
+      made++;
+    });
+  });
+  lines.push("END:VCALENDAR");
+  var text = lines.join("\r\n");
+  if (window.claude && typeof window.claude.use === "function"){
+    window.claude.use("downloads").then(function(dl){
+      if (!dl) return copy(text, "Calendar text copied — save it as a .ics file");
+      dl.save({filename:"parkplay.ics", data:text}).then(
+        function(){ toast(made + " event series saved."); },
+        function(){ copy(text, "Calendar text copied — save it as a .ics file"); });
+    }, function(){ copy(text, "Calendar text copied — save it as a .ics file"); });
+    return;
+  }
+  var blob = new Blob([text], {type:"text/calendar"});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "parkplay.ics";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  toast(made + " event series downloaded.");
+}
+
+/* =====================================================================
+   Render
+   ===================================================================== */
+function render(){
+  renderAcct();
+  if (!catalog) return;
+  if (view === "home") renderHome();
+  else if (view === "find") renderFind();
+  else if (view === "map") renderMap();
+  else if (view === "quiz") renderQuiz();
+  else if (view === "plan") renderPlan();
+}
+renderAcct();
+boot();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+{
+  "Armatage Park": {
+    "lat": 44.8988985,
+    "lng": -93.3099325,
+    "source": "nominatim",
+    "display": "Armatage Park, Southwest, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Creekview Park": {
+    "lat": 45.0469581,
+    "lng": -93.3036532,
+    "source": "nominatim",
+    "display": "Creekview Park, 5001, Camden, Minneapolis, Hennepin County, Minnesota, 55430, United States"
+  },
+  "Bryant Square Park": {
+    "lat": 44.9456587,
+    "lng": -93.2900446,
+    "source": "nominatim",
+    "display": "Bryant Square Park, Lyn-Lake, Bde Maka Ska-Isles, Minneapolis, Hennepin County, Minnesota, 55408, United States"
+  },
+  "Windom South Park": {
+    "lat": 44.8975463,
+    "lng": -93.2800263,
+    "source": "nominatim",
+    "display": "Windom South Park, Southwest, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Lynnhurst Park": {
+    "lat": 44.9135189,
+    "lng": -93.2997081,
+    "source": "nominatim",
+    "display": "Lynnhurst Park, 1345, Southwest, Minneapolis, Hennepin County, Minnesota, 55419, United States"
+  },
+  "Windom Northeast Park": {
+    "lat": 45.0113095,
+    "lng": -93.2473077,
+    "source": "nominatim",
+    "display": "Northeast Central Avenue, Windom Park, Northeast, Minneapolis, Hennepin County, Minnesota, 55418, United States"
+  },
+  "Stewart Park": {
+    "lat": 44.9546347,
+    "lng": -93.2587949,
+    "source": "nominatim",
+    "display": "Stewart Park, Phillips, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Van Cleve Park": {
+    "lat": 44.9868645,
+    "lng": -93.2318811,
+    "source": "nominatim",
+    "display": "Van Cleve Park, Dinkytown, University, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Hiawatha School Park": {
+    "lat": 44.926131,
+    "lng": -93.2109434,
+    "source": "nominatim",
+    "display": "Hiawatha School Park, Longfellow, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Loring Park": {
+    "lat": 44.9696824,
+    "lng": -93.2796553,
+    "source": "nominatim",
+    "display": "Loring Park, Central, Minneapolis, Hennepin County, Minnesota, 55403, United States"
+  },
+  "Kenwood Park": {
+    "lat": 44.9645939,
+    "lng": -93.3053762,
+    "source": "nominatim",
+    "display": "Kenwood Park, 2101, Bde Maka Ska-Isles, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "N/A": {
+    "lat": 44.9696822,
+    "lng": -93.2877269,
+    "source": "nominatim",
+    "display": "I 94;MN 55, Loring Park, Central, Minneapolis, Hennepin County, Minnesota, 55403, United States"
+  },
+  "Brackett Field Park": {
+    "lat": 44.9530252,
+    "lng": -93.2184874,
+    "source": "nominatim",
+    "display": "Brackett Field Park, 2728, Longfellow, Minneapolis, Hennepin County, Minnesota, 55406, United States"
+  },
+  "Logan Park": {
+    "lat": 45.002191,
+    "lng": -93.2530862,
+    "source": "nominatim",
+    "display": "Logan Park, Northeast, Minneapolis, Hennepin County, Minnesota, 55413, United States"
+  },
+  "Lyndale Farmstead Park": {
+    "lat": 44.9323529,
+    "lng": -93.2912731,
+    "source": "nominatim",
+    "display": "Lyndale Farmstead Park, Southwest, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Painter Park": {
+    "lat": 44.9421203,
+    "lng": -93.2874988,
+    "source": "nominatim",
+    "display": "Painter Park, Powderhorn, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Fuller Park": {
+    "lat": 44.9154198,
+    "lng": -93.2850811,
+    "source": "nominatim",
+    "display": "Fuller Park, Southwest, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Pearl Park": {
+    "lat": 44.9066188,
+    "lng": -93.2685327,
+    "source": "nominatim",
+    "display": "Pearl Park, Nokomis, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Elliot Park": {
+    "lat": 44.9710426,
+    "lng": -93.2620913,
+    "source": "nominatim",
+    "display": "Elliot Park, Mill District, Central, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Keewaydin Park": {
+    "lat": 44.9083539,
+    "lng": -93.2279011,
+    "source": "nominatim",
+    "display": "Keewaydin Park, Nokomis, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "McRae Park": {
+    "lat": 44.9191032,
+    "lng": -93.2611833,
+    "source": "nominatim",
+    "display": "McRae Park, 906, Nokomis, Minneapolis, Hennepin County, Minnesota, 55407, United States"
+  },
+  "Folwell Park": {
+    "lat": 45.0222313,
+    "lng": -93.3000635,
+    "source": "nominatim",
+    "display": "Folwell Park, Camden, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Longfellow Park": {
+    "lat": 44.9401713,
+    "lng": -93.2191356,
+    "source": "nominatim",
+    "display": "Longfellow Park, Longfellow, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Rev. Dr. Martin Luther King, Jr. Park": {
+    "lat": 44.9293311,
+    "lng": -93.2764778,
+    "source": "nominatim",
+    "query": "Martin Luther King Park, Minneapolis, MN",
+    "display": "Martin Luther King Park, 4055, Southwest, Minneapolis, Hennepin County, Minnesota, 55409, United States"
+  },
+  "Whittier Park": {
+    "lat": 44.9545228,
+    "lng": -93.2845543,
+    "source": "nominatim",
+    "display": "Whittier Park, Eat Street, Powderhorn, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Matthews Park": {
+    "lat": 44.9583021,
+    "lng": -93.231455,
+    "source": "nominatim",
+    "display": "Matthews Park, Longfellow, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Audubon Park": {
+    "lat": 45.0188831,
+    "lng": -93.236355,
+    "source": "nominatim",
+    "display": "Audobon Park, Northeast, Minneapolis, Hennepin County, Minnesota, 55418, United States"
+  },
+  "Farview Park": {
+    "lat": 45.0078279,
+    "lng": -93.2864794,
+    "source": "nominatim",
+    "display": "Farview Park, 621, Near North, Minneapolis, Hennepin County, Minnesota, 55411, United States"
+  },
+  "Pershing Field Park": {
+    "lat": 44.9152279,
+    "lng": -93.3233308,
+    "source": "nominatim",
+    "display": "Pershing Park, 50th and France, Southwest, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Phillips Park": {
+    "lat": 44.9595158,
+    "lng": -93.25719,
+    "source": "nominatim",
+    "display": "Phillips Park, Phillips, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Northstar Gym": {
+    "lat": 44.976512,
+    "lng": -93.2698121,
+    "source": "nominatim",
+    "query": "Northstar, Minneapolis, MN",
+    "display": "Northstar Center, Gateway District, Central, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Theodore Wirth Regional Park": {
+    "lat": 44.9802079,
+    "lng": -93.3236418,
+    "source": "nominatim",
+    "query": "Theodore Wirth Park, Minneapolis, Minnesota",
+    "display": "Theodore Wirth Park, Golden Valley, Hennepin County, Minnesota, United States"
+  },
+  "Bottineau Field Park": {
+    "lat": 45.0364439,
+    "lng": -93.2664362,
+    "source": "nominatim",
+    "query": "2000 2nd St NE, Minneapolis, MN",
+    "display": "2nd Street Northeast, Columbia Park, Northeast, Columbia Heights, Anoka County, Minnesota, 55421, United States"
+  },
+  "Harrison Park": {
+    "lat": 44.9827762,
+    "lng": -93.3007032,
+    "source": "nominatim",
+    "display": "Harrison Park, 503, Near North, Minneapolis, Hennepin County, Minnesota, 55405, United States"
+  },
+  "Lake Nokomis Park": {
+    "lat": 44.9085916,
+    "lng": -93.2418501,
+    "source": "nominatim",
+    "display": "Lake Nokomis Park, 4955, Nokomis, Minneapolis, Hennepin County, Minnesota, 55417, United States"
+  },
+  "Linden Hills Park": {
+    "lat": 44.9260123,
+    "lng": -93.3201308,
+    "source": "nominatim",
+    "display": "Linden Hills Park, Southwest, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Lake Hiawatha Park": {
+    "lat": 44.9207878,
+    "lng": -93.239117,
+    "source": "nominatim",
+    "display": "Lake Hiawatha Park, 2701, Nokomis, Minneapolis, Hennepin County, Minnesota, 55406, United States"
+  },
+  "North Mississippi Regional Park": {
+    "lat": 45.0305994,
+    "lng": -93.2845809,
+    "source": "nominatim",
+    "display": "North Mississippi Regional Park, 4900, Camden, Minneapolis, Hennepin County, Minnesota, 55430, United States"
+  },
+  "Dinky Park (formerly Marcy)": {
+    "lat": 44.9856304,
+    "lng": -93.2376193,
+    "source": "nominatim",
+    "query": "Dinky Park, Minneapolis, MN",
+    "display": "Dinky Park, 711, Dinkytown, University, Minneapolis, Hennepin County, Minnesota, 55414, United States"
+  },
+  "Powderhorn Park": {
+    "lat": 44.9399395,
+    "lng": -93.2553694,
+    "source": "nominatim",
+    "display": "Powderhorn Park, Powderhorn, Minneapolis, Hennepin County, Minnesota, 55407, United States"
+  },
+  "Luxton Park": {
+    "lat": 44.9675357,
+    "lng": -93.219075,
+    "source": "nominatim",
+    "display": "Luxton Park, 112, Stadium Village, University, Minneapolis, Hennepin County, Minnesota, 55414, United States"
+  },
+  "Corcoran Park": {
+    "lat": 44.9421434,
+    "lng": -93.2442175,
+    "source": "nominatim",
+    "display": "Corcoran Park, Powderhorn, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Kenny Park": {
+    "lat": 44.8988606,
+    "lng": -93.2972037,
+    "source": "nominatim",
+    "display": "Kenny Park, Southwest, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "MPRB Citywide Activities": {
+    "lat": null,
+    "lng": null,
+    "source": "miss"
+  },
+  "North Commons Park": {
+    "lat": 44.9963977,
+    "lng": -93.3025713,
+    "source": "nominatim",
+    "display": "North Commons Park, 1801, Near North, Minneapolis, Hennepin County, Minnesota, 55411, United States"
+  },
+  "Webber Park": {
+    "lat": 45.0343777,
+    "lng": -93.2916869,
+    "source": "nominatim",
+    "display": "Webber Park, 4300, Camden, Minneapolis, Hennepin County, Minnesota, 55412, United States"
+  },
+  "East Phillips Park": {
+    "lat": 44.9603692,
+    "lng": -93.2487794,
+    "source": "nominatim",
+    "display": "East Phillips Park, East Phillips, Phillips, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Morris Park": {
+    "lat": 44.9009822,
+    "lng": -93.2158617,
+    "source": "nominatim",
+    "display": "Morris Park, Nokomis, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "40th Street Park": {
+    "lat": 44.9323401,
+    "lng": -93.2448163,
+    "source": "nominatim",
+    "display": "40th Street Park, 1900, Powderhorn, Minneapolis, Hennepin County, Minnesota, 55407, United States"
+  },
+  "Father Hennepin Bluff Park": {
+    "lat": 44.9821373,
+    "lng": -93.2508467,
+    "source": "nominatim",
+    "display": "Father Hennepin Bluff Park, 420, Saint Anthony Main, University, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Northeast Athletic Field Park": {
+    "lat": 45.0023668,
+    "lng": -93.239732,
+    "source": "nominatim",
+    "display": "Northeast Athletic Field Park, 1530, Northeast, Minneapolis, Hennepin County, Minnesota, 55413, United States"
+  },
+  "Cedar Lake Park": {
+    "lat": 44.9624209,
+    "lng": -93.3161941,
+    "source": "nominatim",
+    "display": "Cedar Lake Park, Bde Maka Ska-Isles, Minneapolis, Hennepin County, Minnesota, 55416, United States"
+  },
+  "Columbia Park": {
+    "lat": 45.0307128,
+    "lng": -93.2631771,
+    "source": "nominatim",
+    "display": "Columbia Park, Northeast, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Minnehaha Regional Park": {
+    "lat": 44.9128455,
+    "lng": -93.207834,
+    "source": "nominatim",
+    "display": "Minnehaha Regional Park, 4801, Longfellow, Minneapolis, Hennepin County, Minnesota, 55417, United States"
+  },
+  "Farview Gym": {
+    "lat": 45.0078279,
+    "lng": -93.2864794,
+    "source": "nominatim",
+    "query": "Farview, Minneapolis, MN",
+    "display": "Farview Park, 621, Near North, Minneapolis, Hennepin County, Minnesota, 55411, United States"
+  },
+  "Phelps Field Park": {
+    "lat": 44.9315158,
+    "lng": -93.2637613,
+    "source": "nominatim",
+    "query": "Phelps Park, Minneapolis, Minnesota",
+    "display": "Phelps Park, 701, Powderhorn, Minneapolis, Hennepin County, Minnesota, 55407, United States"
+  },
+  "Graco Park": {
+    "lat": 44.99499,
+    "lng": -93.2712104,
+    "source": "nominatim",
+    "display": "Graco Park, 810, Northeast, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Waite Park": {
+    "lat": 45.0283387,
+    "lng": -93.2360755,
+    "source": "nominatim",
+    "display": "Waite Park, Northeast, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Beltrami Park": {
+    "lat": 44.9977976,
+    "lng": -93.243566,
+    "source": "nominatim",
+    "display": "Beltrami Park, Northeast, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "2900 Glenwood Ave, Minneapolis 55405": {
+    "lat": 44.980826,
+    "lng": -93.317411,
+    "source": "nominatim",
+    "display": "2900, Glenwood Avenue, Harrison, Near North, Minneapolis, Hennepin County, Minnesota, 55405, United States"
+  },
+  "Audubon Park Multi": {
+    "lat": 45.020042,
+    "lng": -93.2397345,
+    "source": "nominatim",
+    "query": "1320 29th Ave NE, Minneapolis, MN",
+    "display": "1320, Northeast 29th Avenue, Audobon Park, Northeast, Minneapolis, Hennepin County, Minnesota, 55418, United States"
+  },
+  "Peavey Field Park": {
+    "lat": 44.9614213,
+    "lng": -93.2638328,
+    "source": "nominatim",
+    "display": "Peavey Field, Phillips, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Nicollet Island Park": {
+    "lat": 44.987497,
+    "lng": -93.2612149,
+    "source": "nominatim",
+    "display": "Nicollet Island Park, 40, University, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Windom South Recreation Center": {
+    "lat": 44.8964141,
+    "lng": -93.2804509,
+    "source": "nominatim",
+    "query": "5843 Wentworth Ave S, Minneapolis, MN",
+    "display": "5843, Wentworth Avenue South, Windom, Southwest, Minneapolis, Hennepin County, Minnesota, 55419, United States"
+  },
+  "The Commons Park": {
+    "lat": 44.9755965,
+    "lng": -93.2613634,
+    "source": "nominatim",
+    "display": "The Commons, 425, Mill District, Central, Minneapolis, Hennepin County, Minnesota, 55488, United States"
+  },
+  "Commons": {
+    "lat": 44.9755965,
+    "lng": -93.2613634,
+    "source": "nominatim",
+    "display": "The Commons, 425, Mill District, Central, Minneapolis, Hennepin County, Minnesota, 55488, United States"
+  },
+  "multi-purpose room": {
+    "lat": null,
+    "lng": null,
+    "source": "miss"
+  },
+  "Water Works": {
+    "lat": 44.9811432,
+    "lng": -93.2602265,
+    "source": "nominatim",
+    "display": "Water Works Pavilion, 425, James I. Rice West River Parkway, Downtown West, Mill District, Central, Minneapolis, Hennepin County, Minnesota, 55415, United States"
+  },
+  "Practices at neighborhood facilities. Games will be played at various MPRB facilities": {
+    "lat": null,
+    "lng": null,
+    "source": "miss"
+  },
+  "Headquarters and Lot": {
+    "lat": 44.9809995,
+    "lng": -93.2573945,
+    "source": "nominatim",
+    "query": "and, Minneapolis, MN",
+    "display": "Upper St. Anthony Falls Lock and Dam, Stone Arch Bridge, Downtown East, Mill District, Central, Minneapolis, Hennepin County, Minnesota, 55415, United States"
+  }
+}

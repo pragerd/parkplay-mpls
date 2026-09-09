@@ -1,0 +1,4 @@
+dist/
+node_modules/
+data/programs.fixture.json
+.DS_Store

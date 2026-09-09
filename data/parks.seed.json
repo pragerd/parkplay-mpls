@@ -1,0 +1,260 @@
+[
+  {
+    "id": "armatage",
+    "name": "Armatage",
+    "addr": "2500 W 57th St",
+    "area": "Southwest"
+  },
+  {
+    "id": "audubon",
+    "name": "Audubon",
+    "addr": "1320 29th Ave NE",
+    "area": "Northeast"
+  },
+  {
+    "id": "bohanon",
+    "name": "Bohanon",
+    "addr": "4917 Fremont Ave N",
+    "area": "North"
+  },
+  {
+    "id": "bottineau",
+    "name": "Bottineau",
+    "addr": "2000 2nd St NE",
+    "area": "Northeast"
+  },
+  {
+    "id": "brynmawr",
+    "name": "Bryn Mawr",
+    "addr": "502 Cedar Lake Rd S",
+    "area": "Southwest"
+  },
+  {
+    "id": "bryant",
+    "name": "Bryant Square",
+    "addr": "3101 Bryant Ave S",
+    "area": "Southwest"
+  },
+  {
+    "id": "cleveland",
+    "name": "Cleveland",
+    "addr": "3500 Washburn Ave N",
+    "area": "North"
+  },
+  {
+    "id": "corcoran",
+    "name": "Corcoran",
+    "addr": "3334 20th Ave S",
+    "area": "South"
+  },
+  {
+    "id": "creekview",
+    "name": "Creekview",
+    "addr": "5001 Humboldt Ave N",
+    "area": "North"
+  },
+  {
+    "id": "eastphil",
+    "name": "East Phillips",
+    "addr": "2307 17th Ave S",
+    "area": "South"
+  },
+  {
+    "id": "elliot",
+    "name": "Elliot Park",
+    "addr": "1000 E 14th St",
+    "area": "Downtown"
+  },
+  {
+    "id": "farview",
+    "name": "Farview",
+    "addr": "621 29th Ave N",
+    "area": "North"
+  },
+  {
+    "id": "folwell",
+    "name": "Folwell",
+    "addr": "1615 Dowling Ave N",
+    "area": "North"
+  },
+  {
+    "id": "fuller",
+    "name": "Fuller",
+    "addr": "4800 Grand Ave S",
+    "area": "Southwest"
+  },
+  {
+    "id": "greencentral",
+    "name": "Green Central",
+    "addr": "3350 4th Ave S",
+    "area": "South"
+  },
+  {
+    "id": "harrison",
+    "name": "Harrison",
+    "addr": "503 Irving Ave N",
+    "area": "North"
+  },
+  {
+    "id": "hiawatha",
+    "name": "Hiawatha School Park",
+    "addr": "4305 42nd Ave S",
+    "area": "Southeast"
+  },
+  {
+    "id": "keewaydin",
+    "name": "Keewaydin",
+    "addr": "3030 E 53rd St",
+    "area": "Southeast"
+  },
+  {
+    "id": "kenny",
+    "name": "Kenny",
+    "addr": "1328 W 58th St",
+    "area": "Southwest"
+  },
+  {
+    "id": "lindenhills",
+    "name": "Linden Hills",
+    "addr": "3100 W 43rd St",
+    "area": "Southwest"
+  },
+  {
+    "id": "logan",
+    "name": "Logan",
+    "addr": "690 13th Ave NE",
+    "area": "Northeast"
+  },
+  {
+    "id": "longfellow",
+    "name": "Longfellow",
+    "addr": "3435 36th Ave S",
+    "area": "Southeast"
+  },
+  {
+    "id": "luxton",
+    "name": "Luxton",
+    "addr": "112 Williams Ave SE",
+    "area": "Southeast"
+  },
+  {
+    "id": "lynnhurst",
+    "name": "Lynnhurst",
+    "addr": "1345 W Minnehaha Pkwy",
+    "area": "Southwest"
+  },
+  {
+    "id": "matthews",
+    "name": "Matthews",
+    "addr": "2318 28th Ave S",
+    "area": "Southeast"
+  },
+  {
+    "id": "mcrae",
+    "name": "McRae",
+    "addr": "906 E 47th St",
+    "area": "South"
+  },
+  {
+    "id": "mlkpark",
+    "name": "MLK Park",
+    "addr": "4055 Nicollet Ave S",
+    "area": "South"
+  },
+  {
+    "id": "morrispark",
+    "name": "Morris Park",
+    "addr": "5531 39th Ave S",
+    "area": "Southeast"
+  },
+  {
+    "id": "nokomis",
+    "name": "Lake Nokomis",
+    "addr": "2401 E Minnehaha Pkwy",
+    "area": "Southeast"
+  },
+  {
+    "id": "northcommons",
+    "name": "North Commons",
+    "addr": "1801 James Ave N",
+    "area": "North"
+  },
+  {
+    "id": "northeast",
+    "name": "Northeast",
+    "addr": "1530 Johnson St NE",
+    "area": "Northeast"
+  },
+  {
+    "id": "painter",
+    "name": "Painter",
+    "addr": "620 W 34th St",
+    "area": "Southwest"
+  },
+  {
+    "id": "pearl",
+    "name": "Pearl",
+    "addr": "414 E Diamond Lake Rd",
+    "area": "South"
+  },
+  {
+    "id": "phillips",
+    "name": "Phillips Community",
+    "addr": "2323 11th Ave S",
+    "area": "South"
+  },
+  {
+    "id": "powderhorn",
+    "name": "Powderhorn",
+    "addr": "3400 15th Ave S",
+    "area": "South"
+  },
+  {
+    "id": "sibley",
+    "name": "Sibley",
+    "addr": "1900 E 40th St",
+    "area": "South"
+  },
+  {
+    "id": "stewart",
+    "name": "Stewart",
+    "addr": "2700 12th Ave S",
+    "area": "South"
+  },
+  {
+    "id": "vancleve",
+    "name": "Van Cleve",
+    "addr": "901 15th Ave SE",
+    "area": "Southeast"
+  },
+  {
+    "id": "waitepark",
+    "name": "Waite Park",
+    "addr": "1810 34th Ave NE",
+    "area": "Northeast"
+  },
+  {
+    "id": "webber",
+    "name": "Webber",
+    "addr": "4400 Dupont Ave N",
+    "area": "North"
+  },
+  {
+    "id": "whittier",
+    "name": "Whittier",
+    "addr": "425 W 26th St",
+    "area": "Southwest"
+  },
+  {
+    "id": "windomne",
+    "name": "Windom Northeast",
+    "addr": "2251 Hayes St NE",
+    "area": "Northeast"
+  },
+  {
+    "id": "windomsouth",
+    "name": "Windom South",
+    "addr": "5843 Wentworth Ave S",
+    "area": "South"
+  }
+]

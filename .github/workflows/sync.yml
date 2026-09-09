@@ -1,0 +1,40 @@
+name: Sync MPRB programs
+
+# Pulls the current youth catalog from MPRB's registration system and commits
+# it, so the site always serves today's listings.
+
+on:
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/sync.mjs
+      - .github/workflows/sync.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Pull the catalog
+        run: node scripts/sync.mjs
+      - name: Commit if it changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/programs.json data/geocache.json
+          if git diff --cached --quiet; then
+            echo "catalog unchanged"
+          else
+            git commit -m "data: refresh MPRB program catalog"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
