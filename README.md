@@ -35,6 +35,8 @@ page from fetching a local JSON file, and the page says so if you try.
 - A six-question quiz scored against what is actually open at your kid's age
 - My plan: a week grid with overlap warnings across kids, calendar export, a
   copy-as-text summary, and every registration link in one place
+- A last-refreshed stamp in the footer and in the top bar, written as how long
+  ago rather than a bare timestamp, with a warning if the nightly sync stalls
 - Everything lives in `localStorage`, so there is nothing to sign into and
   nothing leaves the browser
 

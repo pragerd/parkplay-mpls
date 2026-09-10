@@ -481,7 +481,26 @@ dl.facts dd{margin:0}
 .spinner{width:34px;height:34px;color:var(--tangerine);animation:spin 1.6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* A rubber date stamp: when the catalog was last pulled. */
+.datestamp{
+  display:inline-flex;flex-direction:column;align-items:center;gap:1px;flex:none;
+  border:2px solid var(--rule);border-radius:var(--sq-sm);
+  padding:9px 16px;background:var(--card);box-shadow:var(--pop-sm);
+  transform:rotate(-1.6deg);
+}
+.datestamp .cap{font-size:9.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.datestamp .when{
+  font-family:var(--display);font-weight:900;font-size:var(--f-md);line-height:1.15;
+  font-variation-settings:"SOFT" 40,"WONK" 1;
+}
+.datestamp .exact{font-size:11px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.datestamp.stale{border-color:var(--poppy);box-shadow:2px 2px 0 var(--poppy)}
+.datestamp.stale .when{color:var(--poppy)}
+.notebar .fresh{font-weight:800;color:var(--ink);white-space:nowrap}
+.notebar .fresh.stale{color:var(--poppy)}
+
 footer.site{border-top:2px solid var(--rule);background:var(--paper-2);padding:var(--s5) 0 var(--s7)}
+.foot-in{display:flex;gap:var(--s5);align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
 footer.site p{font-size:var(--f-sm);color:var(--ink-2);max-width:88ch}
 footer.site .hand{color:var(--tangerine);font-size:20px;display:block;margin-bottom:var(--s1)}
 
@@ -571,9 +590,12 @@ footer.site .hand{color:var(--tangerine);font-size:20px;display:block;margin-bot
 </main>
 
 <footer class="site">
-  <div class="wrap">
+  <div class="wrap foot-in">
+    <div>
     <span class="hand">made by a parent, not by the park board</span>
     <p>An independent front end for Minneapolis Park &amp; Recreation Board programs, not affiliated with or endorsed by MPRB. Registration, payment, refunds and fee assistance all happen on MPRB's own site. Questions about a real registration: 612-230-6400 weekdays 8 am to 4:30 pm, or ask at any recreation center.</p>
+    </div>
+    <div id="refresh-stamp"></div>
   </div>
 </footer>
 
@@ -890,6 +912,7 @@ function ready(data){
       return cat(a).name.localeCompare(cat(b).name);
     });
   renderProvenance();
+  renderRefreshStamp();
   render();
 }
 function renderLoadError(){
@@ -902,12 +925,49 @@ function renderLoadError(){
       '<a class="btn btn-go" href="https://anc.apm.activecommunities.com/mplsparkandrec/activity/search?onlineSiteId=0&activity_select_param=2&max_age=17&viewMode=list" target="_blank" rel="noopener">Go straight to MPRB</a>' +
     '</div>';
 }
+/* How stale is the catalog? The relative answer is the useful one; the exact
+   timestamp is right there for anyone who wants to check it. */
+function freshness(){
+  var when = catalog && catalog.generatedAt ? new Date(catalog.generatedAt) : null;
+  if (!when || isNaN(when)) return {ok:false, relative:"at an unknown time", exact:"", full:"", stale:true};
+  var mins = Math.round((Date.now() - when.getTime()) / 60000);
+  var rel;
+  if (mins < 2) rel = "just now";
+  else if (mins < 60) rel = mins + " minutes ago";
+  else if (mins < 120) rel = "an hour ago";
+  else if (mins < 24 * 60) rel = Math.round(mins / 60) + " hours ago";
+  else if (mins < 48 * 60) rel = "yesterday";
+  else rel = Math.round(mins / (60 * 24)) + " days ago";
+  return {
+    ok: true,
+    relative: rel,
+    exact: when.toLocaleString(undefined, {month:"short", day:"numeric", hour:"numeric", minute:"2-digit"}),
+    full: when.toLocaleString(undefined, {weekday:"long", month:"long", day:"numeric", hour:"numeric", minute:"2-digit", timeZoneName:"short"}),
+    stale: mins > 60 * 24 * 3
+  };
+}
+function renderRefreshStamp(){
+  var el = $("#refresh-stamp");
+  if (!el || !catalog) return;
+  var f = freshness();
+  el.innerHTML =
+    '<div class="datestamp' + (f.stale ? " stale" : "") + '" title="' + esc(f.full) + '">' +
+      '<span class="cap">last refreshed</span>' +
+      '<span class="when">' + esc(f.relative) + '</span>' +
+      (f.exact ? '<span class="exact">' + esc(f.exact) + '</span>' : "") +
+    '</div>' +
+    (f.stale
+      ? '<p class="fine" style="max-width:28ch;margin-top:var(--s1);color:var(--poppy)">The nightly refresh looks stalled, so check spots on the MPRB listing before counting on them.</p>'
+      : '<p class="fine" style="max-width:28ch;margin-top:var(--s1)">Pulls itself fresh every night at 4:17 am.</p>');
+}
+
 function renderProvenance(){
-  var when = catalog.generatedAt ? new Date(catalog.generatedAt) : null;
-  var stamped = when ? when.toLocaleString(undefined, {month:"long", day:"numeric", hour:"numeric", minute:"2-digit"}) : "recently";
+  var f = freshness();
   $("#provenance").innerHTML =
     '<span class="hand">psst —</span>' +
-    '<p><strong>' + catalog.programs.length + ' programs for kids</strong>, read straight out of the Park Board&rsquo;s registration system on ' + esc(stamped) +
+    '<p><strong>' + catalog.programs.length + ' programs for kids</strong>, read straight out of the Park Board&rsquo;s registration system ' +
+    '<span class="fresh' + (f.stale ? " stale" : "") + '" title="' + esc(f.full) + '">' + esc(f.relative) + '</span>' +
+    (f.exact ? ' <span style="color:var(--ink-3);font-variant-numeric:tabular-nums">(' + esc(f.exact) + ')</span>' : "") +
     '. The spots and dates are theirs. Every register button here opens the real listing on ' +
     '<a href="https://anc.apm.activecommunities.com/mplsparkandrec/activity/search?onlineSiteId=0&activity_select_param=2&max_age=17&viewMode=list" target="_blank" rel="noopener">MPRB Online Recreation Services</a>.</p>';
 }
