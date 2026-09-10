@@ -425,5 +425,12 @@
     "source": "nominatim",
     "query": "and, Minneapolis, MN",
     "display": "Upper St. Anthony Falls Lock and Dam, Stone Arch Bridge, Downtown East, Mill District, Central, Minneapolis, Hennepin County, Minnesota, 55415, United States"
+  },
+  "Cedar Avenue Field Park": {
+    "lat": 44.9569006,
+    "lng": -93.248007,
+    "source": "nominatim",
+    "query": "Cedar Avenue Field Park, Minneapolis, MN",
+    "display": "Cedar Avenue Field Park, East Phillips, Phillips, Minneapolis, Hennepin County, Minnesota, United States"
   }
 }
