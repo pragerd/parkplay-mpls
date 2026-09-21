@@ -432,5 +432,12 @@
     "source": "nominatim",
     "query": "Cedar Avenue Field Park, Minneapolis, MN",
     "display": "Cedar Avenue Field Park, East Phillips, Phillips, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Historic Main Street Park": {
+    "lat": 44.985342,
+    "lng": -93.2580551,
+    "source": "nominatim",
+    "query": "Historic Main Street Park, Minneapolis, MN",
+    "display": "Historic Main Street Park, 420, Saint Anthony Main, University, Minneapolis, Hennepin County, Minnesota, United States"
   }
 }
