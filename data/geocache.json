@@ -439,5 +439,24 @@
     "source": "nominatim",
     "query": "Historic Main Street Park, Minneapolis, MN",
     "display": "Historic Main Street Park, 420, Saint Anthony Main, University, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Bohanon Park": {
+    "lat": 45.0449158,
+    "lng": -93.29278,
+    "source": "nominatim",
+    "query": "Bohanon Park, Minneapolis, MN",
+    "display": "Bohanon Park, Camden, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Gym": {
+    "lat": 44.9408196,
+    "lng": -93.2714932,
+    "source": "nominatim",
+    "query": "Gym, Minneapolis, MN",
+    "display": "Central Gym Park, Powderhorn, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Multi-purpose room": {
+    "lat": null,
+    "lng": null,
+    "source": "miss"
   }
 }
