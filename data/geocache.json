@@ -458,5 +458,12 @@
     "lat": null,
     "lng": null,
     "source": "miss"
+  },
+  "Lake Harriet Park": {
+    "lat": 44.921812,
+    "lng": -93.297175,
+    "source": "nominatim",
+    "query": "Lake Harriet Park, Minneapolis, MN",
+    "display": "Lake Harriet Park, 4135, Southwest, Minneapolis, Hennepin County, Minnesota, 55409, United States"
   }
 }
