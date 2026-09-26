@@ -465,5 +465,17 @@
     "source": "nominatim",
     "query": "Lake Harriet Park, Minneapolis, MN",
     "display": "Lake Harriet Park, 4135, Southwest, Minneapolis, Hennepin County, Minnesota, 55409, United States"
+  },
+  "Lake of the Isles Park": {
+    "lat": 44.9499607,
+    "lng": -93.3065551,
+    "source": "nominatim",
+    "query": "Lake of the Isles Park, Minneapolis, MN",
+    "display": "Lake of the Isles Park, Bde Maka Ska-Isles, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Multipurpose Room": {
+    "lat": null,
+    "lng": null,
+    "source": "miss"
   }
 }
