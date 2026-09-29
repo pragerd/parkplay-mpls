@@ -477,5 +477,12 @@
     "lat": null,
     "lng": null,
     "source": "miss"
+  },
+  "Teen Room": {
+    "lat": 44.9442076,
+    "lng": -93.2760209,
+    "source": "nominatim",
+    "query": "Teen, Minneapolis, MN",
+    "display": "Minnesota Adult & Teen Challenge - Minneapolis Campus, East 32nd Street, Lyndale, Powderhorn, Minneapolis, Hennepin County, Minnesota, 55408, United States"
   }
 }
