@@ -484,5 +484,12 @@
     "source": "nominatim",
     "query": "Teen, Minneapolis, MN",
     "display": "Minnesota Adult & Teen Challenge - Minneapolis Campus, East 32nd Street, Lyndale, Powderhorn, Minneapolis, Hennepin County, Minnesota, 55408, United States"
+  },
+  "Lyndale Park": {
+    "lat": 44.9272665,
+    "lng": -93.2962228,
+    "source": "nominatim",
+    "query": "Lyndale Park, Minneapolis, MN",
+    "display": "Lyndale Park, 1300, Southwest, Minneapolis, Hennepin County, Minnesota, United States"
   }
 }
