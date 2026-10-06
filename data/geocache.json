@@ -491,5 +491,12 @@
     "source": "nominatim",
     "query": "Lyndale Park, Minneapolis, MN",
     "display": "Lyndale Park, 1300, Southwest, Minneapolis, Hennepin County, Minnesota, United States"
+  },
+  "Luxton": {
+    "lat": 44.9675357,
+    "lng": -93.219075,
+    "source": "nominatim",
+    "query": "Luxton, Minneapolis, MN",
+    "display": "Luxton Park, 112, Stadium Village, University, Minneapolis, Hennepin County, Minnesota, 55414, United States"
   }
 }
