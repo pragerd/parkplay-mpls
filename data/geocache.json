@@ -498,5 +498,10 @@
     "source": "nominatim",
     "query": "Luxton, Minneapolis, MN",
     "display": "Luxton Park, 112, Stadium Village, University, Minneapolis, Hennepin County, Minnesota, 55414, United States"
+  },
+  "Lake Nokomis Keewaydin Elementary": {
+    "lat": null,
+    "lng": null,
+    "source": "miss"
   }
 }
