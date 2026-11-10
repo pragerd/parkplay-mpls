@@ -508,5 +508,12 @@
     "lat": null,
     "lng": null,
     "source": "miss"
+  },
+  "North Commons Recreation center": {
+    "lat": 44.9972759,
+    "lng": -93.3012175,
+    "source": "nominatim",
+    "query": "North Commons Recreation center, Minneapolis, MN",
+    "display": "North Commons Recreation Center, 1801, James Avenue North, Harrison, Near North, Minneapolis, Hennepin County, Minnesota, 55411, United States"
   }
 }
