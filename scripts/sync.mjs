@@ -206,7 +206,7 @@ function audienceOf(name, ages) {
 /* Only the league listings have divisions. A ceramics class does not, so this
    reads the title rather than guessing from an age range. */
 function divisionOf(name) {
-  const m = /\b(6U|8U|10U|11U|12U|13U|14U|15U|18U)\b/i.exec(name);
+  const m = /\b(\d{1,2}U)\b/i.exec(name);
   if (m) return m[1].toUpperCase();
   const grade = /\b(\d+)(?:st|nd|rd|th)\s*(?:&|and|-|to)?\s*(?:(\d+)(?:st|nd|rd|th))?\s*grade/i.exec(name);
   if (grade) return grade[2] ? `grades ${grade[1]}-${grade[2]}` : `grade ${grade[1]}`;
@@ -249,16 +249,21 @@ for (const label of parkLabels) {
       .replace(/\((?:formerly|previously)[^)]*\)/gi, "")
       .replace(/\b(?:Rev\.?|Dr\.?|Mr\.?|Mrs\.?|Ms\.?)\s*/gi, "")
       .replace(/,?\s*Jr\.?,?/gi, " ")
+      .replace(/\b(?:and|&)\s+(?:Lot|Parking(?:\s+Lot)?)\b/gi, "")
       .replace(/\b(?:Multi|Multi-purpose|Gym|Gymnasium|Room|Lot|Headquarters)\b/gi, "")
       .replace(/\s{2,}/g, " ")
+      .replace(/[\s,]*\b(?:and|&)\s*$/i, "")
       .replace(/\s*,\s*$/, "")
       .trim();
     const core = plain.replace(/\b(?:Field\s+Park|Recreation Center|Rec Center|Community Center|Regional Park|Park)\b/gi, "").trim();
+    /* An ice arena is a named venue, not a park, so ask for it by name too. */
+    const arena = /\b(?:Ice Arena|Arena|Ice Rink|Rink|Pool|Aquatic Center|Elementary|School)\b/i.test(plain) ? plain : "";
     const queries = [];
     const add = (q) => { if (q && q.length > 4 && queries.indexOf(q) < 0) queries.push(q); };
     add(`${label}, Minneapolis, MN`);
     if (seeded?.addr) add(`${seeded.addr}, Minneapolis, MN`);
     if (plain !== label) add(`${plain}, Minneapolis, MN`);
+    if (arena) add(`${arena}, Minneapolis, Minnesota`);
     if (core) add(`${core} Park, Minneapolis, Minnesota`);
     if (core) add(`${core} Recreation Center, Minneapolis, Minnesota`);
     if (bare && bare !== label) add(`${bare} Park, Minneapolis, MN`);
